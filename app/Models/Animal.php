@@ -18,6 +18,8 @@ class Animal extends Model
         'raza',
         'observacionesAnimal',
         'estadoSolicitud',
+        'img',
+        'updated_at',
         'created_at'
         //'user_id', COD2
     ];
