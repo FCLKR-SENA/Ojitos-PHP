@@ -1,0 +1,33 @@
+nav{
+    padding-left: 22.5%;
+    padding-top: 5px;
+    height: 40px;
+    background-color:#22b14c;
+
+}
+
+#main-menu ul>li {
+    float: left;
+    margin: 3px;
+    padding-left: 2%;
+    
+}
+
+#main-menu ul>li>a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 8px;
+    text-align: center;
+    padding-bottom: 9%;
+}
+#main-menu ul>li> a:hover {
+	color:#ffffff;
+	background-color:#5a5a5a;
+    padding-bottom: 9%;
+}
+#main-menu ul {
+    list-style: none;
+    text-align: center;
+}

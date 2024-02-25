@@ -1,0 +1,58 @@
+.banner{
+	width: 100%;
+	height: 250px;
+	border: 1px solid #22b14c;
+	margin: auto;
+	background-size: 100% 100%;
+	
+	animation-name: banner;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes banner{
+	0%, 12%{
+		background-image: url(../Media/Imgs/Banner/Adopcion_1.jpg);
+        opacity:1;
+	}
+	13%, 16%{
+			opacity: 0.8;
+	}
+    17%, 29%{
+		background-image: url(../Media/Imgs/Banner/Clinica_1.jpg);
+        opacity:1;
+	}
+	30%, 33%{
+		opacity:0.8;
+	}
+	34%, 46%{
+		background-image: url(../Media/Imgs/Banner/Clinica_2.jpg);
+        opacity:1;
+	}
+    47%, 50%{
+        opacity: 0.8;
+    }
+    51%, 63%{
+    background-image: url(../Media/Imgs/Banner/Food_Public_1.jpg);
+    opacity:1;
+    }
+    64%, 67%{
+        opacity:0.8;
+    }
+    68%, 80%{
+    background-image: url(../Media/Imgs/Banner/Food_Public_2.jpg);
+    opacity:1;
+    }
+    64%, 67%{
+        opacity:0.8;
+    }
+        
+    85%, 97%{
+        background-image: url(../Media/Imgs/Banner/Paseador_3.jpg);
+        opacity:1;
+    }
+
+    98%, 98.1%{
+        opacity:0.8;
+    }
+}
