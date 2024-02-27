@@ -1,4 +1,40 @@
 <style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        padding-top: 50px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.9);
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 80%;
+        max-height: 80%;
+    }
+
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
     #confirmationModalDelete {
         display: none;
         position: fixed;
@@ -43,11 +79,6 @@
         cursor: pointer;
     }
 
-    #confirmButton {
-        background-color: green;
-        color: white;
-    }
-
     #cancelButton {
         background-color: red;
         color: white;
@@ -82,7 +113,7 @@
         width: 3%;
     }
     th {
-        background-color: #0b2e13; /* Fondo gris oscuro para los títulos */
+        background-color:  #644494 ; /* Fondo gris oscuro para los títulos */
         font-weight: bold; /* Títulos en negrilla */
         color: #ffffff;
     }
@@ -145,9 +176,9 @@
                         <div class="mt-3">
                             <x-input-label for="especie_Animal" :value="__('Especifique la especie')" />
 
-                            
-                            <!--<x-text-input id="especie_Animal" class="block mt-1 w-full" type="text" name="especie_Animal" :value="old('name')" required autofocus autocomplete="especie_Animal" />
-                            <x-input-error :messages="$errors->get('especie_Animal')" class="mt-2" />-->
+
+                            <x-text-input id="especie_Animal" class="block mt-1 w-full" type="text" name="especie_Animal" :value="old('name')" required autofocus autocomplete="especie_Animal" />
+                            <x-input-error :messages="$errors->get('especie_Animal')" class="mt-2" />
                         </div>
 
                         <!--Nombre asignado-->
@@ -162,6 +193,13 @@
                             <x-input-label for="raza" :value="__('¿Cual es la raza?')" />
                             <x-text-input id="raza" class="block mt-1 w-full" type="text" name="raza" :value="old('name')" required autofocus autocomplete="raza" />
                             <x-input-error :messages="$errors->get('raza')" class="mt-2" />
+                        </div>
+
+                        <!--Edad-->
+                        <div class="mt-3">
+                            <x-input-label for="age" :value="__('¿Cual es la edad (meses)?')" />
+                            <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" :value="old('age')" required autofocus autocomplete="raza" />
+                            <x-input-error :messages="$errors->get('edad')" class="mt-2" />
                         </div>
 
                         <!--Observaciones-->
@@ -191,7 +229,7 @@
         </div> <!-- CIERRE DEL CONTAINER-->
 
             <div class="py-12">
-                <div class="max-w-7xl mx-auto sm:px-10 lg:px-12">
+                <div class="max-w-7xl mx-auto sm:px-8 lg:px-12">
                     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-gray-900 dark:text-gray-100">
 
@@ -215,6 +253,7 @@
                         <th>Fecha</th>
                         <th class="esp">Especie</th>
                         <th>Raza</th>
+                        <th>Edad (Meses)</th>
                         <th class="obs">Observaciones</th>
                         <th>Actualizado</th>
                         <th>Estado Solicitud</th>
@@ -225,7 +264,7 @@
                     @foreach($animals as $animal)
                         <tr>
                             <td> @if($animal->img)
-                                    <img src="{{ asset('storage/' . $animal->img) }}" style="max-width: 50px; max-height: 50px;">
+                                        <img src="{{ asset($animal->img) }}" style="max-width: 80px; max-height: 80px;" alt="imagen" onclick="openModal('{{ asset($animal->img) }}')">
                                 @else
                                     No hay imagen
                                 @endif
@@ -234,6 +273,7 @@
                             <td class="fecha">{{ $animal->created_at }}</td>
                             <td>{{ $animal->especie_Animal }}</td>
                             <td>{{ $animal->raza }}</td>
+                            <td>{{ $animal->age}}</td>
                             <td>{{ $animal->observacionesAnimal }}</td>
                             <td
                                 class="updated_at">{{$animal->updated_at}}
@@ -301,6 +341,12 @@
         </div>
     </div>
 
+<!--MODAL PARA IMAGEN-->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" class="modal-content" src="" alt="imagen">
+    </div>
+
     <!-- Cuadro de confirmación Registro -->
     <div id="confirmationModal">
         <div id="confirmationBox">
@@ -325,6 +371,17 @@
 
 
     <script>
+        function openModal(imageSrc) {
+            var modal = document.getElementById('imageModal');
+            var modalImg = document.getElementById('modalImage');
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+        }
+
+        function closeModal() {
+            var modal = document.getElementById('imageModal');
+            modal.style.display = "none";
+        }
         // Obtener el campo de fecha
         var fechaEncuentroInput = document.getElementById('fechaEncuentro');
 

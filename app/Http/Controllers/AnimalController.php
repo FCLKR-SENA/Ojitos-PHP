@@ -17,7 +17,11 @@ class AnimalController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
+    public function showImage($id)
+    {
+        $animal = Animal::findOrFail($id);
+        return response()->file(storage_path('app/' . $animal->img));
+    }
 
     public function index()
     {
@@ -58,6 +62,7 @@ class AnimalController extends Controller
             'especie_Animal' => 'required',
             'nombreAnimaladopocion' => 'required',
             'raza' => 'required',
+            'age'=>'required',
             'observacionesAnimal' => ['required','min:10' , 'max:255'],
             'img'
         ]);
@@ -82,6 +87,7 @@ class AnimalController extends Controller
             'especie_Animal' =>$request->get  ('especie_Animal'),
             'nombreAnimaladopocion' =>$request->get  ('nombreAnimaladopocion'),
             'raza' =>$request->get  ('raza'),
+            'age'=>$request->get('age'),
             'observacionesAnimal' =>$request->get ('observacionesAnimal'),
             'img' => $rutaImagen
             //'user_id' => auth()->id() ,//Trae el ID de quien se esta logueando COD2
@@ -141,6 +147,7 @@ class AnimalController extends Controller
             'especie_Animal' => 'required',
             'nombreAnimaladopocion' => 'required',
             'raza' => 'required',
+            'age' =>'required',
             'observacionesAnimal' => ['required','min:10' , 'max:255']
         ]);
 

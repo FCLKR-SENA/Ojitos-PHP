@@ -16,6 +16,7 @@ class Animal extends Model
         'especie_Animal',
         'nombreAnimaladopocion',
         'raza',
+        'age',
         'observacionesAnimal',
         'estadoSolicitud',
         'img',

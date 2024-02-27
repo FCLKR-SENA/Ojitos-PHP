@@ -22,12 +22,12 @@
             align-items: center; /* Centrar verticalmente los elementos */
         }
         nav {
-            background-color:  #24b44c ;
+            background-color:   #644494  ;
             padding: 10px 0;
             text-align: center;
         }
         nav a {
-            color: #000000;
+            color: #ffffff;
             text-decoration: none;
             padding: 10px 20px;
         }
@@ -62,8 +62,8 @@
         }
 
         footer {
-            background-color:  #24b44c;
-            color: #000000;
+            background-color: #644494;
+            color: #ffffff;
             padding: 20px;
             text-align: center;
         }
@@ -79,15 +79,15 @@
         @auth
             @if (Auth::user()->role->name == 'USER')
                 <!-- Sección para clientes -->
-                <a href="{{ url('/dashboardUser') }}" style="background-color: #24b44c; color: #35524a; padding: 5px 15px; border-radius: 5px; text-decoration: none;">Dashboard</a>
+                <a href="{{ url('/dashboardUser') }}" style="background-color:  #644494 ; color: #ffffff; padding: 5px 15px; border-radius: 5px; text-decoration: none;">Dashboard</a>
             @elseif (Auth::user()->role->name == 'ADMIN')
                 <!-- Sección para administradores -->
-                <a href="{{ url('/dashboardAdmin') }}" style="background-color: #24b44c; color: #35524a; padding: 5px 15px; border-radius: 5px; text-decoration: none;">Dashboard</a>
+                <a href="{{ url('/dashboardAdmin') }}" style="background-color:  #644494 ; color: #ffffff; padding: 5px 15px; border-radius: 5px; text-decoration: none;">Dashboard</a>
             @endif
         @else
         <a href="{{ route('login') }}" style="color: #000000; text-decoration: none; margin-right: 20px;">Iniciar sesión</a>
             @if (Route::has('register'))
-        <a href="{{ route('register') }}" style="background-color:  #24b44c ; color: #000000; padding: 5px 15px; border-radius: 5px; text-decoration: none;">Registrarse</a>
+        <a href="{{ route('register') }}" style="background-color:   #644494  ; color: #ffffff; padding: 5px 15px; border-radius: 5px; text-decoration: none;">Registrate</a>
             @endif
         @endauth
     </div>

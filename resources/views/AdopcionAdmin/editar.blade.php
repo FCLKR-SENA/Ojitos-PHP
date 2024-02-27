@@ -95,6 +95,13 @@
                             <x-input-error :messages="$errors->get('raza')" class="mt-2" />
                         </div>
 
+                        <!--Edad-->
+                        <div class="mt-3">
+                            <x-input-label for="age" :value="__('¿Cual es la edad? (meses)')" />
+                            <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" :value="old('age', $animal->age)" required autofocus autocomplete="age" />
+                            <x-input-error :messages="$errors->get('age')" class="mt-2" />
+                        </div>
+
                         <!--Observaciones-->
                         <div class="mt-3">
                             <x-input-label for="observacionesAnimal" :value="__('Que observaciones')" />
