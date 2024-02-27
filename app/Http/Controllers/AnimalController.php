@@ -32,6 +32,15 @@ class AnimalController extends Controller
         ]); //Comunicacion con "route" en Web"
     }
 
+    public function indexUser()
+    {
+        //$animals = Animal::with('user')->orderBy('created_at', 'desc')->get();
+        return view ('AdopcionUser.index',[
+            'animals'=> Animal::with('user')->latest()->get()
+            // 'animals'=> Animal::all() Original
+        ]); //Comunicacion con "route" en Web"
+    }
+
     /**
      * Show the form for creating a new resource.
      *

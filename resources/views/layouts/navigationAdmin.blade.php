@@ -30,9 +30,9 @@
                         @elseif (Auth::user()->role->name == 'USER')
                             <!-- Sección para USER -->
                             <x-nav-link :href="route('dashboardUser')" :active="request()->routeIs('dashboardUser')">
-                                {{ __('Dashboard') }}
+                                {{ __('(Home)') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('dashboardUser')" :active="request()->routeIs('dashboardUser')">
+                            <x-nav-link :href="route('AdopcionUser.index')" :active="request()->routeIs('AdopcionUser.*')">
                                 {{ __('¡Adopta!') }}
                             </x-nav-link>
                            @endif

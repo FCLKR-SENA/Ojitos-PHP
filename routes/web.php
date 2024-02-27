@@ -19,6 +19,12 @@ use App\Http\Controllers\AnimalController;
 Route::get('/', function () {
     return view('index');
 });
+
+//************************PUBLICOS*************************************+
+Route::get('/adopta', [\App\Http\Controllers\AnimalController::class, 'indexUser'])
+    ->name('AdopcionUser.index');
+
+
 //**************************ENTRADA DIRECTA ADMIN***********************
 Route::get('/dashboardAdmin', function () {
     return view('dashboardAdmin');
@@ -61,7 +67,7 @@ Route::middleware(['auth', 'verified', 'roles:ADMIN'])->group(function () {
 
 //----------------------USUARIO-------------------------
 Route::middleware(['auth', 'verified', 'roles:USER'])->group(function () {
-   // Route::get('/adopcion', [\App\Http\Controllers\AnimalController::class, 'index'])->name('AdopcionAdmin.index');
+
 });
 
 
