@@ -24,9 +24,13 @@
                     <x-nav-link :href="route('dashboardAdmin')" :active="request()->routeIs('dashboardAdmin')">
                         {{ __('(Home)') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('AdopcionAdmin.index')" :active="request()->routeIs('AdopcionAdmin.*')">
+                    <x-nav-link :href="route('AdopcionAdmin.index')" :active="request()->routeIs('AdopcionAdmin.index')">
                         {{ __('Adopcion') }}
                     </x-nav-link>
+                            <x-nav-link :href="route('AdopcionAdmin.solicitudesAdoption')" :active="request()->routeIs('AdopcionAdmin.solicitudesAdoption')">
+                                {{ __('Solicitudes') }}
+                            </x-nav-link>
+
                         @elseif (Auth::user()->role->name == 'USER')
                             <!-- Sección para USER -->
                             <x-nav-link :href="route('dashboardUser')" :active="request()->routeIs('dashboardUser')">
@@ -95,6 +99,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('AdopcionAdmin.index')" :active="request()->routeIs('AdopcionAdmin.*')">
                 {{ __('Adopcion') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('AdopcionAdmin.solicitudesAdoption')" :active="request()->routeIs('AdopcionAdmin.*')">
+                {{ __('Solicitudes') }}
             </x-responsive-nav-link>
         </div>
 

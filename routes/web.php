@@ -33,7 +33,7 @@ Route::get('/dashboardAdmin', function () {
 
 //**************************ENTRADA DIRECTA AUSER***********************
 Route::get('/dashboardUser', function () {
-    return view('dashboardUSer');
+    return view('dashboardUser');
 })->middleware(['auth', 'verified','roles:USER'])->name('dashboardUser');
 //*************************************************************************
 
@@ -52,6 +52,8 @@ Route::middleware(['auth', 'verified', 'roles:ADMIN'])->group(function () {
     Route::get('/adopcion', [\App\Http\Controllers\AnimalController::class, 'index'])->name('AdopcionAdmin.index');
     Route::post('/adopcion', [\App\Http\Controllers\AnimalController::class, 'store'])->name('AnimalAdmin.store');
 
+    Route::get('/solicitudes', [\App\Http\Controllers\AdoptionController::class, 'index'])->name('AdopcionAdmin.solicitudesAdoption');
+
 
     Route::get('/animals/{animal}/edit', [AnimalController::class,'edit'])
         ->name('animals.edit');
@@ -67,7 +69,13 @@ Route::middleware(['auth', 'verified', 'roles:ADMIN'])->group(function () {
 
 //----------------------USUARIO-------------------------
 Route::middleware(['auth', 'verified', 'roles:USER'])->group(function () {
+    Route::post('/enviar-correo', 'App\Http\Controllers\EnviarCorreoController@enviarCorreo')->name('enviar-correo');
 
+    Route::get('/formadoption', function () {
+        return view('AdopcionUser/Form-Adoption');
+    });
+
+    Route::post('/adopta', [\App\Http\Controllers\ProbabilidadController::class, 'index'])->name('Probabilidad');
 });
 
 

@@ -16,7 +16,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <h2 class="T1">
-                        Animales en adopcion
+                        Mensaje enviado
                     </h2>
                     <h3>¡Te mostramos acontinuacion a nuestros peludos disponibles para que hagan parte de tu familia!</h3>
                 </div>

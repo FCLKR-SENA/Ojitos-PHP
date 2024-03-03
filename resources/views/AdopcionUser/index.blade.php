@@ -1,4 +1,78 @@
 <style>
+    /* MODAL CONFIRMACION ENVIO*/
+    .confirmacion{
+        color: #ffffff;
+    }
+
+    .confirdesc{
+        color: #ffffff;
+    }
+
+    .modalc {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-contentc {
+        background-color: #1a282f;
+        margin: 15% auto;
+        padding: 2px;
+        border-radius: 5px;
+        border: 3px solid #644494;
+        width: 30%;
+        max-width: 400px;
+        box-shadow: 0 4px 8px rgba(0,0,0,1);
+        text-align: center; /* Centrar texto */
+        justify-items: center;
+    }
+
+    .closec {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Estilos para los botones dentro del modal */
+    .modal-buttons {
+        margin-top: 20px;
+    }
+
+    .modal-buttonsc button {
+        padding: 10px 20px;
+        margin-right: 0px;
+        cursor: pointer;
+        padding: 0%;
+        color: white;
+        background-color:#3269c2;
+        text-align: center; /* Centrar botón */
+        margin-top: 20px;
+    }
+
+    #cancelBtnc {
+        margin-top: 25px; /* Agregar espacio entre el texto y el botón */
+        cursor: pointer;
+        padding: 4%;
+        color: white;
+        background-color:#3269c2;
+        text-align: center;
+    }
+
+    /* *****FIN MODAL***** */
+
     .SinfoButton {
         background-color:    #3269c2  ;
         color: white;
@@ -183,24 +257,32 @@
                                 <div class="modal-info-container py-12 px-6 ">
                                 <!-- Contenido de la información adicional del animal -->
                                     <div class="modal-column ">
-                                <img src="{{ asset($animal->img) }}" style="max-width: 70%; max-height: 90%;" alt="imagen" >
+                                <img src="{{ asset($animal->img) }}" style="max-width: 100%; max-height: 100%;" alt="imagen" >
                                     </div>
 
                                     <div class="modal-column ">
                                     <h2>Información adicional del animal</h2>
                                 <p>Identificacion: {{ $animal->id }}</p>
                                 <p>Nombre: {{ $animal->nombreAnimaladopocion }}</p>
-                                <p>Nombre: {{ $animal->especie_Animal }}</p>
+                                <p>Especie: {{ $animal->especie_Animal }}</p>
                                 <p>Raza: {{ $animal->raza }}</p>
                                 <p>Edad: {{ $animal->age }}</p>
                                 <p>Observaciones: {{ $animal->observacionesAnimal }}</p>
                                         <div class="modal-container-botons">
                                             <div class="modal-boton1">
-                                                <button class="SinfoButton">Mas Informacion</button>
+                                                <button class="SinfoButton"  onclick="enviarCorreo('{{ $animal->id }}')">Mas Informacion</button>
                                             </div>
 
+                                            <form id="emailForm{{ $animal->id }}" action="{{ route('enviar-correo') }}" method="POST" style="display: none;">
+                                                @csrf
+                                                <input type="hidden" name="animal_id" value="{{ $animal->id }}">
+                                            </form>
+
                                             <div class="modal-boton2">
-                                                <button class="SadoptarButton">Solicitar Adopcion</button>
+                                                <a href="http://localhost:8000/formadoption?animal_id={{ $animal->id }}">
+                                                    <button class="SadoptarButton" >Solicitar Adopcion</button>
+                                                </a>
+
                                             </div>
                                         </div>
                                 </div>
@@ -216,6 +298,17 @@
         </div>
     </div>
 
+    <!-- Modal Confirmacion correo -->
+    <div id="myModalc" class="modalc">
+       <!-- <span class="closec">&times;</span> -> "X" para cierre de la ventana-->
+        <div class="modal-contentc py-12">
+            <p class="confirdesc">Estamos enviando informacion a tu correo...</p>
+           <!-- <div class="modal-buttonsc">
+                <button id="cancelBtnc">Aceptar</button>
+                Puedes agregar aquí un botón para realizar alguna acción adicional
+            </div>-->
+        </div>
+    </div>
 
 
     <!--MODAL PARA IMAGEN-->
@@ -225,6 +318,50 @@
     </div>
 
     <script>
+        function enviarCorreo(animalId) {
+            var form = document.getElementById('emailForm' + animalId);
+            form.submit();
+            openModalc()
+            console.log()
+        }
+
+        //***************MODAL CONFIRMACION ENVIO DE CORREO******
+
+        // Obtener elementos del DOM
+        var modal = document.getElementById('myModalc');
+        var openModalBtn = document.getElementById('openModalBtnc');
+        var closeModalBtn = document.getElementsByClassName('closec')[0];
+        var cancelBtn = document.getElementById('cancelBtnc');
+
+        // Función para abrir el modal
+        function openModalc() {
+            modal.style.display = 'block';
+        }
+
+        /* Función para abrir el modal
+        openModalBtn.onclick = function() {
+            modal.style.display = 'block';
+        }*/
+
+        // Función para cerrar el modal al hacer click en la X
+        closeModalBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        // Función para cerrar el modal al hacer click en el botón de cancelar
+        cancelBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        // Función para cerrar el modal al hacer click fuera de él
+        /*window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }*/
+
+        //*******FIN MODAL******************************
+
         function openInfoModal(animalId) {
             var modal = document.getElementById('infoModal' + animalId);
             modal.style.display = "block";
@@ -246,6 +383,5 @@
             modal.style.display = "none";
         }
     </script>
-
 
 </x-app-layout>

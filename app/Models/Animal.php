@@ -25,6 +25,13 @@ class Animal extends Model
         //'user_id', COD2
     ];
 
+    public function adoptions()
+    {
+        return $this->hasMany(Adoption::class, 'animal_adopcioncol');
+    }
+
+
+
     public function  user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);

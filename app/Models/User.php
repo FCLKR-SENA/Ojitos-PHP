@@ -74,5 +74,10 @@ class User extends Authenticatable
         return $this->role()->whereIn('name', $roles)->exists();
     }
 
+    public function adoptions()
+    {
+        return $this->hasMany(Adoption::class, 'usuarios_id_usuario');
+    }
+
 
 }
