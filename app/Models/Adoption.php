@@ -17,7 +17,7 @@ class Adoption extends Model
         'img',
         'created_at',
         'updated_at',
-        'probablidad',
+        'probabilidad',
         'adoption_status',
     ];
 

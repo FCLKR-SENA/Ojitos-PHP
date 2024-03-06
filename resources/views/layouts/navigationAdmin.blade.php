@@ -25,7 +25,7 @@
                         {{ __('(Home)') }}
                     </x-nav-link>
                     <x-nav-link :href="route('AdopcionAdmin.index')" :active="request()->routeIs('AdopcionAdmin.index')">
-                        {{ __('Adopcion') }}
+                        {{ __('Animales') }}
                     </x-nav-link>
                             <x-nav-link :href="route('AdopcionAdmin.solicitudesAdoption')" :active="request()->routeIs('AdopcionAdmin.solicitudesAdoption')">
                                 {{ __('Solicitudes') }}
@@ -98,7 +98,7 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('AdopcionAdmin.index')" :active="request()->routeIs('AdopcionAdmin.*')">
-                {{ __('Adopcion') }}
+                {{ __('Animales') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('AdopcionAdmin.solicitudesAdoption')" :active="request()->routeIs('AdopcionAdmin.*')">
                 {{ __('Solicitudes') }}

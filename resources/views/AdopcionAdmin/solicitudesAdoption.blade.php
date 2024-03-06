@@ -196,7 +196,7 @@
                                         <td>{{ $adopcion->animals->age}}</td>
                                         <td>{{ $adopcion->users->name }}</td>
                                         <td>{{ $adopcion->users->document }}</td>
-                                        <td>{{ $adopcion->probabilidad }}</td>
+                                        <td>{{ $adopcion->probabilidad }}%</td>
                                         <td class="statusrequest">
                                             {{ $adopcion->adoption_status }}
                                             @if($adopcion->created_at != $adopcion->updated_at)
