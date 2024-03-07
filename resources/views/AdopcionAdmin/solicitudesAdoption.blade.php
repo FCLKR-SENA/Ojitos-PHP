@@ -1,4 +1,59 @@
 <style>
+
+    .modal-buttonsc button {
+        padding: 10px 20px;
+        margin-right: 0px;
+        cursor: pointer;
+        padding: 0%;
+        color: white;
+        background-color:#3269c2;
+        text-align: center; /* Centrar botón */
+        margin-top: 20px;
+    }
+
+    #cancelBtnc {
+        margin-top: 25px; /* Agregar espacio entre el texto y el botón */
+        cursor: pointer;
+        padding: 4%;
+        color: white;
+        background-color:#3269c2;
+        text-align: center;
+    }
+
+    /* *****FIN MODAL***** */
+
+    .SinfoButton {
+        background-color:    #3269c2  ;
+        color: white;
+        padding: 6%;
+
+    }
+    .SadoptarButton {
+        background-color:   #694393 ;
+        color: white;
+        padding: 4%;
+
+    }
+    .modal-container-botons{
+        margin-top: 10%;
+    }
+    .modal-boton2{
+        margin-top: 5%;
+    }
+    .modal-info-container {
+        display: flex;
+    }
+
+    .modal-column {
+        flex: 1;
+        padding: 0 20px; /* Ajusta el espaciado entre las columnas según sea necesario */
+    }
+
+    .modal-column img {
+        max-width: 100%;
+        height: auto;
+    }
+
     /* Estilo del modal */
     .modaldes {
         display: none;
@@ -198,6 +253,11 @@
         font-size: 70%;
         text-align: center;
     }
+
+    .modal-boton1{
+        margin-top: 5%;
+    }
+
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap">
 <x-app-layout>
@@ -322,7 +382,9 @@
                                                             <p>E-mail: {{$adopcion->users->email }}</p>
                                                             <p>Se unio a Ojitos: {{$adopcion->users->created_at }}</p>
                                                             <p style="margin-top: 2%;">Motivo de adopcion: {{ $adopcion->motivo }}</p>
-
+                                                            <div class="modal-boton1">
+                                                                <button class="SinfoButton"  onclick="enviarCorreo('{{ $adopcion->id_animaladopcion }}')">Mas Informacion</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

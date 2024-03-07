@@ -38,11 +38,7 @@ CREATE TABLE IF NOT EXISTS `adopcion` (
   CONSTRAINT `fk_adopcion_usuarios1` FOREIGN KEY (`usuarios_id_usuario`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.adopcion: ~2 rows (aproximadamente)
-DELETE FROM `adopcion`;
-INSERT INTO `adopcion` (`id_animaladopcion`, `fecha_adopcion`, `animal_adopcioncol`, `usuarios_id_usuario`, `img`, `created_at`, `updated_at`, `probabilidad`, `adoption_status`, `motivo`) VALUES
-	(103, '2024-03-03', 90, 51, NULL, '2024-03-03 04:22:28', '2024-03-03 04:22:29', 98, 'Aprobado', NULL),
-	(111, NULL, 95, 50, 'storage/images/1709336130_Luker.jpg', '2024-03-07 03:09:53', '2024-03-07 03:09:53', 39, 'En proceso', 'Estoy muy emocionado por ayudar a un animalito que lo necesita.');
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla ojitos_db1.animales_en_adopcion
 CREATE TABLE IF NOT EXISTS `animales_en_adopcion` (
@@ -60,17 +56,7 @@ CREATE TABLE IF NOT EXISTS `animales_en_adopcion` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.animales_en_adopcion: ~8 rows (aproximadamente)
-DELETE FROM `animales_en_adopcion`;
-INSERT INTO `animales_en_adopcion` (`id`, `fechaEncuentro`, `nombreAnimaladopocion`, `especie_Animal`, `raza`, `age`, `observacionesAnimal`, `estadoSolicitud`, `img`, `created_at`, `updated_at`) VALUES
-	(89, '2024-02-25', 'Grande', 'Perro', 'Criollo', 24, 'Se dono de un refugio aliado. Falta Desparacitar. Vacunas al dia.', 'Disponible', 'storage/images/1709336216_Grande.jpg', '2024-02-25 08:38:30', '2024-03-01 18:36:56'),
-	(90, '2024-02-13', 'Loco', 'Gato', 'Siberiano', 6, 'Gato encontrado en un apto', 'Disponible', 'storage/images/1709336290_Loco.jpg', '2024-02-25 02:43:40', '2024-03-01 18:38:31'),
-	(91, '2024-02-13', 'Lion', 'Gato', 'angora', 6, 'Encontrado en santa marta, vacunas al dia. No se entrega solo', 'Disponible', 'storage/images/1709336273_Lion.jpg', '2024-02-25 03:45:45', '2024-03-01 18:37:53'),
-	(92, '2024-02-13', 'Labra', 'Perro', 'Criollo', 60, 'Se recogio de un refugio aliado. Vacuna antifelina. Falta desparacitante.', 'Disponible', 'storage/images/1709336245_Labra.jpg', '2024-02-25 04:30:16', '2024-03-01 18:37:25'),
-	(93, '2024-02-26', 'Lulu', 'Perro', 'Beagle', 24, 'Encontrada en la calle', 'Disponible', 'storage/images/1709336185_Chiquis.jpg', '2024-02-26 19:52:31', '2024-03-01 18:36:25'),
-	(94, '2024-02-27', 'Bear', 'Perro', 'Criollo', 6, 'Gato encontrado en Sta Marta. Vacunas al dia se entrega con su hermano Ramon.', 'Disponible', 'storage/images/1709336150_Bear.jpg', '2024-02-26 20:00:59', '2024-03-01 18:36:06'),
-	(95, '2024-02-27', 'Luker', 'Perro', 'Criollo', 25, 'Gato encontrado en un apto', 'Disponible', 'storage/images/1709336130_Luker.jpg', '2024-02-26 20:57:01', '2024-03-01 18:35:31'),
-	(96, '2024-03-06', 'Petro', 'Perro', 'Siberiano', 60, 'Perro encontrado a las afueras de la ciudad. Vacuna antirrábica, desparasitado.', 'Disponible', 'storage/images/1709697464_Petro.jpg', '2024-03-05 22:57:45', '2024-03-05 22:57:45');
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla ojitos_db1.factura
 CREATE TABLE IF NOT EXISTS `factura` (
@@ -87,8 +73,7 @@ CREATE TABLE IF NOT EXISTS `factura` (
   CONSTRAINT `fk_factura_usuarios1` FOREIGN KEY (`usuarios_id_usuario`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.factura: ~0 rows (aproximadamente)
-DELETE FROM `factura`;
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla ojitos_db1.factura_details
 CREATE TABLE IF NOT EXISTS `factura_details` (
@@ -107,8 +92,7 @@ CREATE TABLE IF NOT EXISTS `factura_details` (
   CONSTRAINT `fk_factura_has_product_product1` FOREIGN KEY (`product_id_product`) REFERENCES `product` (`id_product`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.factura_details: ~0 rows (aproximadamente)
-DELETE FROM `factura_details`;
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla ojitos_db1.password_resets
 CREATE TABLE IF NOT EXISTS `password_resets` (
@@ -117,8 +101,7 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
   `created_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla ojitos_db1.password_resets: ~0 rows (aproximadamente)
-DELETE FROM `password_resets`;
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla ojitos_db1.password_reset_tokens
 CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
@@ -128,10 +111,7 @@ CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla ojitos_db1.password_reset_tokens: ~1 rows (aproximadamente)
-DELETE FROM `password_reset_tokens`;
-INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
-	('faceluker@outlook.es', '$2y$10$aBvJXi026eEmnxfW71JaMOoLH9vrOFKp5OzQGgj.JdlyHG9nKNdYe', '2024-02-28 20:59:10');
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla ojitos_db1.pet
 CREATE TABLE IF NOT EXISTS `pet` (
@@ -147,8 +127,7 @@ CREATE TABLE IF NOT EXISTS `pet` (
   CONSTRAINT `fk_pet_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.pet: ~0 rows (aproximadamente)
-DELETE FROM `pet`;
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla ojitos_db1.product
 CREATE TABLE IF NOT EXISTS `product` (
@@ -163,11 +142,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   PRIMARY KEY (`id_product`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.product: ~0 rows (aproximadamente)
-DELETE FROM `product`;
-INSERT INTO `product` (`id_product`, `product_name`, `product_price`, `descripcion`, `stock`, `img`, `created_at`, `updated_at`) VALUES
-	(15, NULL, 100000, 'Cama para perro grande', 50, NULL, '2024-03-07 04:18:48', '2024-03-07 04:18:48'),
-	(18, 'Cama', 10000, 'Cama para perro grande', 50, NULL, '2024-03-07 04:30:51', '2024-03-07 04:30:51');
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla ojitos_db1.roles
 CREATE TABLE IF NOT EXISTS `roles` (
@@ -176,12 +151,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla ojitos_db1.roles: ~2 rows (aproximadamente)
-DELETE FROM `roles`;
-INSERT INTO `roles` (`id`, `name`) VALUES
-	(1, 'ADMIN'),
-	(2, 'STAFF'),
-	(3, 'USER');
+-- La exportación de datos fue deseleccionada.
 
 -- Volcando estructura para tabla ojitos_db1.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -203,15 +173,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   CONSTRAINT `fk_users_roles1` FOREIGN KEY (`roles_idroles`) REFERENCES `roles` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.users: ~6 rows (aproximadamente)
-DELETE FROM `users`;
-INSERT INTO `users` (`id`, `name`, `lastname`, `document`, `email`, `password`, `estado`, `age`, `updated_at`, `created_at`, `roles_idroles`, `remember_token`) VALUES
-	(49, 'Jefferson Alexander', 'Arenas Zea', '1013671072', 'faceluker@outlook.e', '$2y$10$FOjLcEql267KlVwitBUpEOK4RmpJWR22.AKC6kORL/CmZySgr3VTW', 'Activo', 27, '2024-02-28 20:22:01', '2024-02-21 22:22:22', 1, 'nPQ3P9OeIN1S41YTZ0vSDY5l5j9eTm4YghLMTpuB4EUaBU3t68PxvnTQtHzj'),
-	(50, 'Jose Raul', 'Beltran Sanabria', '234243218', 'faceluker@outlook.es', '$2y$10$RwRPgVYvC7qrwj3f7AYYBeowcELtav39HdjZci1sFKPAQErOj3J92', 'Activo', 27, '2024-02-27 10:58:58', '2024-02-22 23:41:43', 3, NULL),
-	(51, 'Mario', 'Casas', '10182677823', 'ojitosmascotas@gmail.com', '$2y$10$LxJAGkh.dOhaIvSlEsbx1eL9gLffqOUySRiLDZvABQsXr.j6GRgAa', 'Activo', 32, '2024-02-28 19:02:53', '2024-02-28 19:02:53', 3, NULL),
-	(52, 'Novak', 'Djokovic', '10187858745', 'melosrun7@gmail.com', '$2y$10$KiX3V5TgSd6dAJLj7wlLM.9gCoXF3iMq1NzxK2wrB3Sv/h1/nBFWi', 'Activo', 36, '2024-02-28 19:08:47', '2024-02-28 19:08:47', 3, NULL),
-	(53, 'Tom', 'Brady', '10187853269', 'pythiasdamon21@gmail.com', '$2y$10$Np6RfPOeSA1lyWUR8T1eYe/EGp92hG7VQxZruhxg7.Hm5w3B.I.6i', 'Activo', 40, '2024-02-28 19:13:20', '2024-02-28 19:13:20', 3, NULL),
-	(54, 'Ana', 'Perez', '2468105', 'anaq@hotmail.com', '$2y$10$FYloTOLC6a3vRuS7y8xPU.776eEFgIc0QlnahuRR4MxlRYhiGPiNC', 'Activo', 30, '2024-02-28 19:35:23', '2024-02-28 19:35:23', 3, NULL);
+-- La exportación de datos fue deseleccionada.
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
