@@ -1,4 +1,47 @@
 <style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 2%;
+    }
+
+    th, td {
+        border: 1px solid #000;
+        padding: 8px;
+        width: 4%;
+        text-align: center;
+        color: #ffffff;
+        background-color: #062c33;
+    }
+
+    .obs {
+        width: 15%;
+    }
+
+    .esp {
+        width: 3%;
+    }
+
+    th {
+        background-color: #644494;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    td:nth-child(4),
+    td:nth-child(5) {
+        width: 120px;
+    }
+
+    .updated_at {
+        font-size: 70%;
+        text-align: left;
+    }
+
+    .fecha {
+        font-size: 70%;
+        text-align: center;
+    }
     #confirmationModal {
     display: none;
     position: fixed;

@@ -22,24 +22,24 @@
 
     /* *****FIN MODAL***** */
 
-    .SinfoButton {
+    .SinfoButtonUsuario {
         background-color:    #3269c2  ;
         color: white;
-        padding: 4%;
-        width: 50%;
-
+        padding: 3%;
+        width:100%;
     }
-    .SadoptarButton {
-        background-color:   #694393 ;
-        color: white;
 
-    }
+
     .modal-container-botons{
         margin-top: 10%;
     }
     .modal-boton2{
-        margin-top: 7.5%;
-        width:55%;
+        margin-top: 5%;
+    }
+
+    .modal-boton1{
+        margin-top: 5%;
+
     }
     .modal-info-container {
         display: flex;
@@ -75,7 +75,7 @@
         padding: 20px;
         border: 1px solid #888;
         width: 60%;
-        height: 70%;
+        height: 100%;
     }
 
     /* Estilo del botón de cerrar */
@@ -255,10 +255,7 @@
         text-align: center;
     }
 
-    .modal-boton1{
-        margin-top: 5%;
-        width:100%;
-    }
+
 
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap">
@@ -347,19 +344,18 @@
                                                             <p style="margin-top: 2%;">Observaciones: {{ $adopcion->animals->observacionesAnimal }}</p>
 
                                                             <!-- BTNS DE GESTION-->
-                                                            <div class="modal-container-buttons" style="display: flex; justify-content: space-between; margin-top: 10px;">
-                                                                <div class="modal-boton1">
-                                                                    <button class="SinfoButton" onclick="enviarCorreo('{{ $adopcion->id_animaladopcion }}')">Mas Informacion</button>
+                                                            <form id="emailForm{{ $adopcion->id_animaladopcion }}" action="{{ route('enviar-correo') }}" method="POST" style="display: none;">
+                                                                @csrf
+                                                                <input type="hidden" name="animal_id" value="{{ $adopcion->id_animaladopcion }}">
+                                                            </form>
+                                                            <div class="modal-container-buttons" style="display: flex; justify-content: space-between; margin-top: 3%; margin-right: 20%">
+                                                                <div class="modal-boton1" style="display: flex; justify-content: left;">
+                                                                    <x-secondary-button class="SinfoButton" style="background-color: #c80000; padding: 5%;" onclick="enviarCorreo('{{ $adopcion->id_animaladopcion }}')">Rechazar</x-secondary-button>
                                                                 </div>
 
-                                                                <form id="emailForm{{ $adopcion->id_animaladopcion }}" action="{{ route('enviar-correo') }}" method="POST" style="display: none;">
-                                                                    @csrf
-                                                                    <input type="hidden" name="animal_id" value="{{ $adopcion->id_animaladopcion }}">
-                                                                </form>
-
-                                                                <div class="modal-boton2">
+                                                                <div class="modal-boton2" style="display: flex; justify-content: right;">
                                                                     <a href="http://localhost:8000/formadoption?animal_id={{ $adopcion->id_animaladopcion }}">
-                                                                        <button class="SadoptarButton">Solicitar Adopcion</button>
+                                                                        <x-primary-button class="SadoptarButton">Aprobar</x-primary-button>
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -382,7 +378,7 @@
                                                             <p>Se unio a Ojitos: {{$adopcion->users->created_at }}</p>
                                                             <p style="margin-top: 2%;">Motivo de adopcion: {{ $adopcion->motivo }}</p>
                                                             <div class="modal-boton1">
-                                                                <button class="SinfoButton"  onclick="enviarCorreo('{{ $adopcion->id_animaladopcion }}')">Mas Informacion</button>
+                                                                <button class="SinfoButtonUsuario"  onclick="enviarCorreo('{{ $adopcion->id_animaladopcion }}')">Mas Informacion</button>
                                                             </div>
                                                         </div>
                                                     </div>

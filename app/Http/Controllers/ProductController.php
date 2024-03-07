@@ -70,5 +70,8 @@ class ProductController extends Controller
             $imagePath = $image->store('product_images', 'public');
             $product->img = $imagePath;
         }
+        $product->save();
+
+        return redirect()->route('ProductAdmin.index')->with('success', 'Producto actualizado exitosamente.');
     }
 }
