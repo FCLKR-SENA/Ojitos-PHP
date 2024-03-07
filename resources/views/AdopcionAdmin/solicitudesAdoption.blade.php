@@ -347,7 +347,7 @@
                                                             <p style="margin-top: 2%;">Observaciones: {{ $adopcion->animals->observacionesAnimal }}</p>
 
                                                             <!-- BTNS DE GESTION-->
-                                                            <div class="modal-container-buttons" style="display: flex; justify-content: space-between;">
+                                                            <div class="modal-container-buttons" style="display: flex; justify-content: space-between; margin-top: 10px;">
                                                                 <div class="modal-boton1">
                                                                     <button class="SinfoButton" onclick="enviarCorreo('{{ $adopcion->id_animaladopcion }}')">Mas Informacion</button>
                                                                 </div>
@@ -364,7 +364,6 @@
                                                                 </div>
                                                             </div>
                                                             <!-- FIN BOTONES DE GESTION------------------------------->
-
                                                         </div>
 
                                                         <div class="modal-column ">
