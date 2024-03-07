@@ -25,20 +25,21 @@
     .SinfoButton {
         background-color:    #3269c2  ;
         color: white;
-        padding: 6%;
+        padding: 4%;
+        width: 50%;
 
     }
     .SadoptarButton {
         background-color:   #694393 ;
         color: white;
-        padding: 4%;
 
     }
     .modal-container-botons{
         margin-top: 10%;
     }
     .modal-boton2{
-        margin-top: 5%;
+        margin-top: 7.5%;
+        width:55%;
     }
     .modal-info-container {
         display: flex;
@@ -256,6 +257,7 @@
 
     .modal-boton1{
         margin-top: 5%;
+        width:100%;
     }
 
 </style>
@@ -344,10 +346,10 @@
                                                             <p>Edad(meses): {{$adopcion->animals->age }}</p>
                                                             <p style="margin-top: 2%;">Observaciones: {{ $adopcion->animals->observacionesAnimal }}</p>
 
-                                                            <!--BOTONES DE GESTION------------------------------------>
-                                                            <div class="modal-container-botons">
+                                                            <!-- BTNS DE GESTION-->
+                                                            <div class="modal-container-buttons" style="display: flex; justify-content: space-between;">
                                                                 <div class="modal-boton1">
-                                                                    <button class="SinfoButton"  onclick="enviarCorreo('{{ $adopcion->id_animaladopcion }}')">Mas Informacion</button>
+                                                                    <button class="SinfoButton" onclick="enviarCorreo('{{ $adopcion->id_animaladopcion }}')">Mas Informacion</button>
                                                                 </div>
 
                                                                 <form id="emailForm{{ $adopcion->id_animaladopcion }}" action="{{ route('enviar-correo') }}" method="POST" style="display: none;">
@@ -357,12 +359,10 @@
 
                                                                 <div class="modal-boton2">
                                                                     <a href="http://localhost:8000/formadoption?animal_id={{ $adopcion->id_animaladopcion }}">
-                                                                        <button class="SadoptarButton" >Solicitar Adopcion</button>
+                                                                        <button class="SadoptarButton">Solicitar Adopcion</button>
                                                                     </a>
-
                                                                 </div>
                                                             </div>
-
                                                             <!-- FIN BOTONES DE GESTION------------------------------->
 
                                                         </div>
