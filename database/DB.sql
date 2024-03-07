@@ -22,37 +22,52 @@ USE `ojitos_db1`;
 -- Volcando estructura para tabla ojitos_db1.adopcion
 CREATE TABLE IF NOT EXISTS `adopcion` (
   `id_animaladopcion` int NOT NULL AUTO_INCREMENT,
-  `fecha_adopcion` date NOT NULL,
+  `fecha_adopcion` date DEFAULT NULL,
   `animal_adopcioncol` int NOT NULL,
   `usuarios_id_usuario` int NOT NULL,
-  `img` blob,
+  `img` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
+  `probabilidad` decimal(65,0) DEFAULT NULL,
+  `adoption_status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_animaladopcion`),
   KEY `Animal_Adopcioncol` (`animal_adopcioncol`),
   KEY `fk_adopcion_usuarios1_idx` (`usuarios_id_usuario`),
-  CONSTRAINT `adopcion_ibfk_1` FOREIGN KEY (`animal_adopcioncol`) REFERENCES `animales_en_adopcion` (`id_animaldisponible`),
+  CONSTRAINT `adopcion_ibfk_1` FOREIGN KEY (`animal_adopcioncol`) REFERENCES `animales_en_adopcion` (`id`),
   CONSTRAINT `fk_adopcion_usuarios1` FOREIGN KEY (`usuarios_id_usuario`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.adopcion: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.adopcion: ~2 rows (aproximadamente)
+INSERT INTO `adopcion` (`id_animaladopcion`, `fecha_adopcion`, `animal_adopcioncol`, `usuarios_id_usuario`, `img`, `created_at`, `updated_at`, `probabilidad`, `adoption_status`) VALUES
+	(103, '2024-03-03', 90, 51, NULL, '2024-03-03 04:22:28', '2024-03-03 04:22:29', 98, 'Aprobado'),
+	(105, NULL, 93, 50, 'storage/images/1709336185_Chiquis.jpg', '2024-03-05 21:11:59', '2024-03-05 21:11:59', 60, 'En proceso');
 
 -- Volcando estructura para tabla ojitos_db1.animales_en_adopcion
 CREATE TABLE IF NOT EXISTS `animales_en_adopcion` (
-  `id_animaldisponible` int NOT NULL AUTO_INCREMENT,
-  `fecha_encuentro` date DEFAULT NULL,
-  `nombre_animaladopocion` varchar(50) DEFAULT NULL,
-  `especie_animal` enum('Perro','Gato') DEFAULT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `fechaEncuentro` date DEFAULT NULL,
+  `nombreAnimaladopocion` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `especie_Animal` enum('Perro','Gato') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `raza` varchar(30) DEFAULT NULL,
-  `observaciones_animal` varchar(100) DEFAULT NULL,
-  `estado_solicitud` enum('Disponible','Solicitado','Adoptado','Rechazado') DEFAULT 'Disponible',
-  `img` blob,
+  `age` int DEFAULT NULL,
+  `observacionesAnimal` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `estadoSolicitud` enum('Disponible','Solicitado','Adoptado','Rechazado') CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT 'Disponible',
+  `img` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_animaldisponible`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb3;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.animales_en_adopcion: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.animales_en_adopcion: ~6 rows (aproximadamente)
+INSERT INTO `animales_en_adopcion` (`id`, `fechaEncuentro`, `nombreAnimaladopocion`, `especie_Animal`, `raza`, `age`, `observacionesAnimal`, `estadoSolicitud`, `img`, `created_at`, `updated_at`) VALUES
+	(89, '2024-02-25', 'Grande', 'Perro', 'Criollo', 24, 'Se dono de un refugio aliado. Falta Desparacitar. Vacunas al dia.', 'Disponible', 'storage/images/1709336216_Grande.jpg', '2024-02-25 08:38:30', '2024-03-01 18:36:56'),
+	(90, '2024-02-13', 'Loco', 'Gato', 'Siberiano', 6, 'Gato encontrado en un apto', 'Disponible', 'storage/images/1709336290_Loco.jpg', '2024-02-25 02:43:40', '2024-03-01 18:38:31'),
+	(91, '2024-02-13', 'Lion', 'Gato', 'angora', 6, 'Encontrado en santa marta, vacunas al dia. No se entrega solo', 'Disponible', 'storage/images/1709336273_Lion.jpg', '2024-02-25 03:45:45', '2024-03-01 18:37:53'),
+	(92, '2024-02-13', 'Labra', 'Perro', 'Criollo', 60, 'Se recogio de un refugio aliado. Vacuna antifelina. Falta desparacitante.', 'Disponible', 'storage/images/1709336245_Labra.jpg', '2024-02-25 04:30:16', '2024-03-01 18:37:25'),
+	(93, '2024-02-26', 'Lulu', 'Perro', 'Beagle', 24, 'Encontrada en la calle', 'Disponible', 'storage/images/1709336185_Chiquis.jpg', '2024-02-26 19:52:31', '2024-03-01 18:36:25'),
+	(94, '2024-02-27', 'Bear', 'Perro', 'Criollo', 6, 'Gato encontrado en Sta Marta. Vacunas al dia se entrega con su hermano Ramon.', 'Disponible', 'storage/images/1709336150_Bear.jpg', '2024-02-26 20:00:59', '2024-03-01 18:36:06'),
+	(95, '2024-02-27', 'Luker', 'Perro', 'Criollo', 25, 'Gato encontrado en un apto', 'Disponible', 'storage/images/1709336130_Luker.jpg', '2024-02-26 20:57:01', '2024-03-01 18:35:31'),
+	(96, '2024-03-06', 'Petro', 'Perro', 'Siberiano', 60, 'Perro encontrado a las afueras de la ciudad. Vacuna antirrábica, desparasitado.', 'Disponible', 'storage/images/1709697464_Petro.jpg', '2024-03-05 22:57:45', '2024-03-05 22:57:45');
 
 -- Volcando estructura para tabla ojitos_db1.factura
 CREATE TABLE IF NOT EXISTS `factura` (
@@ -107,9 +122,9 @@ CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla ojitos_db1.password_reset_tokens: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.password_reset_tokens: ~1 rows (aproximadamente)
 INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
-	('faceluker@outlook.es', '$2y$10$c/cn4p9HiDhsTCyJf.IyqeN.dp/MOumeyyrrB6882vbCbVRuIx.WG', '2024-02-21 22:22:40');
+	('faceluker@outlook.es', '$2y$10$aBvJXi026eEmnxfW71JaMOoLH9vrOFKp5OzQGgj.JdlyHG9nKNdYe', '2024-02-28 20:59:10');
 
 -- Volcando estructura para tabla ojitos_db1.pet
 CREATE TABLE IF NOT EXISTS `pet` (
@@ -145,13 +160,13 @@ CREATE TABLE IF NOT EXISTS `product` (
 
 -- Volcando estructura para tabla ojitos_db1.roles
 CREATE TABLE IF NOT EXISTS `roles` (
-  `idroles` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idroles`)
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla ojitos_db1.roles: ~0 rows (aproximadamente)
-INSERT INTO `roles` (`idroles`, `name`) VALUES
+-- Volcando datos para la tabla ojitos_db1.roles: ~2 rows (aproximadamente)
+INSERT INTO `roles` (`id`, `name`) VALUES
 	(1, 'ADMIN'),
 	(2, 'STAFF'),
 	(3, 'USER');
@@ -169,15 +184,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` datetime DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `roles_idroles` int NOT NULL DEFAULT '3',
+  `remember_token` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`document`),
   KEY `fk_users_roles1_idx` (`roles_idroles`),
-  CONSTRAINT `fk_users_roles1` FOREIGN KEY (`roles_idroles`) REFERENCES `roles` (`idroles`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_users_roles1` FOREIGN KEY (`roles_idroles`) REFERENCES `roles` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.users: ~0 rows (aproximadamente)
-INSERT INTO `users` (`id`, `name`, `lastname`, `document`, `email`, `password`, `estado`, `age`, `updated_at`, `created_at`, `roles_idroles`) VALUES
-	(49, 'Jefferson Alexander', 'Arenas Zea', '1013671072', 'faceluker@outlook.es', '$2y$10$RhDN75Vna6N8yjmCzhIFTeZ8wDJY6DjSFD9/WingLoyclBKmfHABy', 'Activo', 27, '2024-02-21 22:23:33', '2024-02-21 22:22:22', 3);
+-- Volcando datos para la tabla ojitos_db1.users: ~6 rows (aproximadamente)
+INSERT INTO `users` (`id`, `name`, `lastname`, `document`, `email`, `password`, `estado`, `age`, `updated_at`, `created_at`, `roles_idroles`, `remember_token`) VALUES
+	(49, 'Jefferson Alexander', 'Arenas Zea', '1013671072', 'faceluker@outlook.e', '$2y$10$FOjLcEql267KlVwitBUpEOK4RmpJWR22.AKC6kORL/CmZySgr3VTW', 'Activo', 27, '2024-02-28 20:22:01', '2024-02-21 22:22:22', 1, 'qkgG7k9mGQ2tiYtSakxhCf6Ndr2NhbACMjkX2HGnPXe6IlqTtrJuz7hP7VS5'),
+	(50, 'Jose Raul', 'Beltran Sanabria', '234243218', 'faceluker@outlook.es', '$2y$10$RwRPgVYvC7qrwj3f7AYYBeowcELtav39HdjZci1sFKPAQErOj3J92', 'Activo', 27, '2024-02-27 10:58:58', '2024-02-22 23:41:43', 3, NULL),
+	(51, 'Mario', 'Casas', '10182677823', 'ojitosmascotas@gmail.com', '$2y$10$LxJAGkh.dOhaIvSlEsbx1eL9gLffqOUySRiLDZvABQsXr.j6GRgAa', 'Activo', 32, '2024-02-28 19:02:53', '2024-02-28 19:02:53', 3, NULL),
+	(52, 'Novak', 'Djokovic', '10187858745', 'melosrun7@gmail.com', '$2y$10$KiX3V5TgSd6dAJLj7wlLM.9gCoXF3iMq1NzxK2wrB3Sv/h1/nBFWi', 'Activo', 36, '2024-02-28 19:08:47', '2024-02-28 19:08:47', 3, NULL),
+	(53, 'Tom', 'Brady', '10187853269', 'pythiasdamon21@gmail.com', '$2y$10$Np6RfPOeSA1lyWUR8T1eYe/EGp92hG7VQxZruhxg7.Hm5w3B.I.6i', 'Activo', 40, '2024-02-28 19:13:20', '2024-02-28 19:13:20', 3, NULL),
+	(54, 'Ana', 'Perez', '2468105', 'anaq@hotmail.com', '$2y$10$FYloTOLC6a3vRuS7y8xPU.776eEFgIc0QlnahuRR4MxlRYhiGPiNC', 'Activo', 30, '2024-02-28 19:35:23', '2024-02-28 19:35:23', 3, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
