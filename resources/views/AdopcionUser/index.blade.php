@@ -268,7 +268,7 @@
                                 <p>Especie: {{ $animal->especie_Animal }}</p>
                                 <p>Raza: {{ $animal->raza }}</p>
                                 <p>Edad: {{ $animal->age }}</p>
-                                <p>Observaciones: {{ $animal->observacionesAnimal }}</p>
+                                <p >">Observaciones: {{ $animal->observacionesAnimal }}</p>
                                         <div class="modal-container-botons">
                                             <div class="modal-boton1">
                                                 <button class="SinfoButton"  onclick="enviarCorreo('{{ $animal->id }}')">Mas Informacion</button>

@@ -1,4 +1,51 @@
 <style>
+    /* Estilo del modal */
+    .modaldes {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.9);
+    }
+
+    /* Estilo del contenido del modal */
+    .modal-contentdes {
+        background-color: #1a282f;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 60%;
+        height: 70%;
+    }
+
+    /* Estilo del botón de cerrar */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    /* Estilo del botón de cerrar al pasar el mouse */
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .modal-info-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .modal-column {
+        flex: 1;
+        padding: 0 10px;
+    }
     .modal {
         display: none;
         position: fixed;
@@ -11,6 +58,19 @@
         overflow: auto;
         background-color: rgba(0,0,0,0.9);
     }
+
+    .probabilidad{
+        font-size: 600%;
+    }
+
+    .Inf{
+        font-size: 115%;
+        font-weight: bold;
+        margin-top: 2%;
+        margin-bottom: 0.4%;
+        font-family: 'Roboto Slab', serif;
+    }
+
 
     .modal-content {
         margin: auto;
@@ -35,6 +95,7 @@
         text-decoration: none;
         cursor: pointer;
     }
+
     #confirmationModalDelete {
         display: none;
         position: fixed;
@@ -138,7 +199,7 @@
         text-align: center;
     }
 </style>
-
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap">
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -202,6 +263,71 @@
                                             @if($adopcion->created_at != $adopcion->updated_at)
                                                 <small class="text-sm text-black-600 dark:text-black-400">&middot; {{__('Actualizado')}}</small>
                                             @endif
+                                            @if($adopcion->adoption_status != "Aprobado")
+                                                <x-primary-button class="mt-4 flex sm:justify-center h-1/5"  onclick="openInfoModal('{{ $adopcion->id_animaladopcion }}')">Gestionar</x-primary-button>
+                                            @endif
+
+                                            <!-- ******************MODAL PARA INFORMACIÓN***************-->
+                                            <div id="infoModal{{ $adopcion->id_animaladopcion}}" class="modaldes">
+                                                <div class="modal-contentdes ">
+                                                    <span class="close" onclick="closeInfoModal('{{$adopcion->id_animaladopcion}}')">&times;</span>
+                                                    <h2 style="font-weight: bold; margin-top: 0%">N° Registro: {{ $adopcion->id_animaladopcion }}</h2>
+                                                    <div class="modal-info-container py-1.5 px-3 ">
+                                                        <!-- Contenido de la información adicional del animal -->
+                                                        <div class="modal-column py-2">
+
+                                                            <img src="{{ $adopcion->animals->img }}" style="max-width: 50%; max-height: 50%;" alt="imagen" >
+                                                            <h2 class="Inf">Información adicional del animal</h2>
+                                                            <p>Nombre: {{ $adopcion->animals->nombreAnimaladopocion }}</p>
+                                                            <p>Especie: {{$adopcion->animals->especie_Animal }}</p>
+                                                            <p>Raza: {{$adopcion->animals->raza }}</p>
+                                                            <p>Edad(meses): {{$adopcion->animals->age }}</p>
+                                                            <p style="margin-top: 2%;">Observaciones: {{ $adopcion->animals->observacionesAnimal }}</p>
+
+                                                            <!--BOTONES DE GESTION------------------------------------>
+                                                            <div class="modal-container-botons">
+                                                                <div class="modal-boton1">
+                                                                    <button class="SinfoButton"  onclick="enviarCorreo('{{ $adopcion->id_animaladopcion }}')">Mas Informacion</button>
+                                                                </div>
+
+                                                                <form id="emailForm{{ $adopcion->id_animaladopcion }}" action="{{ route('enviar-correo') }}" method="POST" style="display: none;">
+                                                                    @csrf
+                                                                    <input type="hidden" name="animal_id" value="{{ $adopcion->id_animaladopcion }}">
+                                                                </form>
+
+                                                                <div class="modal-boton2">
+                                                                    <a href="http://localhost:8000/formadoption?animal_id={{ $adopcion->id_animaladopcion }}">
+                                                                        <button class="SadoptarButton" >Solicitar Adopcion</button>
+                                                                    </a>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- FIN BOTONES DE GESTION------------------------------->
+
+                                                        </div>
+
+                                                        <div class="modal-column ">
+                                                            <h6 style="font-weight: bold; font-size: 80%; margin-bottom: 1%; font-style: italic">Probabilidad de adopcion: </h6>
+                                                            <h2 class="probabilidad"
+                                                                @if($adopcion->probabilidad <40) style="color: #c80000; text-align: center"
+                                                                @elseif($adopcion->probabilidad >39 && $adopcion->probabilidad<60) style="color: #d39e00; text-align: center"
+                                                                @elseif($adopcion->probabilidad >59 && $adopcion->probabilidad<80)style="color: #28a745;text-align: center"
+                                                                @elseif($adopcion->probabilidad >59 && $adopcion->probabilidad<101)style="color: #007bff;text-align: center"
+                                                                @endif>{{$adopcion->probabilidad}}%</h2>
+                                                            <h2 class="Inf">Información adicional del animal</h2>
+                                                            <p>Nombre: {{ $adopcion->users->name}} {{$adopcion->users->lastname}}</p>
+                                                            <p>Identificacion: {{ $adopcion->users->document}}</p>
+                                                            <p>Edad: {{$adopcion->users->age }} años</p>
+                                                            <p>E-mail: {{$adopcion->users->email }}</p>
+                                                            <p>Se unio a Ojitos: {{$adopcion->users->created_at }}</p>
+                                                            <p style="margin-top: 2%;">Motivo de adopcion: {{ $adopcion->motivo }}</p>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- *************FIN DEL MODAL PARA INFORMACIÓN*************** -->
                                         </td>
 
                                     </tr>
@@ -215,6 +341,17 @@
         </div>
     </div>
 
+    <!-- Modal Confirmacion correo -->
+    <div id="myModalc" class="modalc">
+        <!-- <span class="closec">&times;</span> -> "X" para cierre de la ventana-->
+        <div class="modal-contentc py-12">
+            <p class="confirdesc">Estamos enviando informacion a tu correo...</p>
+            <!-- <div class="modal-buttonsc">
+                 <button id="cancelBtnc">Aceptar</button>
+                 Puedes agregar aquí un botón para realizar alguna acción adicional
+             </div>-->
+        </div>
+    </div>
 
     <!--MODAL PARA IMAGEN-->
     <div id="imageModal" class="modal">
@@ -243,6 +380,58 @@
     </div>
 
     <script>
+        function enviarCorreo(animalId) {
+            var form = document.getElementById('emailForm' + animalId);
+            form.submit();
+            openModalc()
+            console.log()
+        }
+
+        //***************MODAL CONFIRMACION ENVIO DE CORREO******
+
+        // Obtener elementos del DOM
+        var modal = document.getElementById('myModalc');
+        var openModalBtn = document.getElementById('openModalBtnc');
+        var closeModalBtn = document.getElementsByClassName('closec')[0];
+        var cancelBtn = document.getElementById('cancelBtnc');
+
+        // Función para abrir el modal
+        function openModalc() {
+            modal.style.display = 'block';
+        }
+
+        /* Función para abrir el modal
+        openModalBtn.onclick = function() {
+            modal.style.display = 'block';
+        }*/
+
+        // Función para cerrar el modal al hacer click en la X
+        closeModalBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        // Función para cerrar el modal al hacer click en el botón de cancelar
+        cancelBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        // Función para cerrar el modal al hacer click fuera de él
+        /*window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }*/
+
+        //*******FIN MODAL******************************
+        function openInfoModal(animalId) {
+            var modal = document.getElementById('infoModal' + animalId);
+            modal.style.display = "block";
+        }
+
+        function closeInfoModal(animalId) {
+            var modal = document.getElementById('infoModal' + animalId);
+            modal.style.display = "none";
+        }
         function openModal(imageSrc) {
             var modal = document.getElementById('imageModal');
             var modalImg = document.getElementById('modalImage');

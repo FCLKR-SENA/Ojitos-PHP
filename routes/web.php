@@ -48,6 +48,8 @@ Route::get('/dashboardAdmin', function () {
 
 Route::middleware(['auth', 'verified', 'roles:ADMIN'])->group(function () {
 
+
+
     Route::get('/productos', [\App\Http\Controllers\ProductController::class, 'index'])->name('ProductAdmin.index');
     Route::post('/productos', [\App\Http\Controllers\ProductController::class, 'store'])->name('ProductAdmin.store');
     Route::get('/products/{product}/edit', [AnimalController::class,'edit'])
