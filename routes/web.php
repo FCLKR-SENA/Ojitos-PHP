@@ -48,6 +48,12 @@ Route::get('/dashboardAdmin', function () {
 
 Route::middleware(['auth', 'verified', 'roles:ADMIN'])->group(function () {
 
+    Route::get('/productos', [\App\Http\Controllers\ProductController::class, 'index'])->name('ProductAdmin.index');
+    Route::post('/productos', [\App\Http\Controllers\ProductController::class, 'store'])->name('ProductAdmin.store');
+    Route::get('/products/{product}/edit', [AnimalController::class,'edit'])
+        ->name('products.edit');
+    Route::delete('products/{product}',[AnimalController::class,'destroy'])
+        ->name('products.destroy');
 
     Route::get('/adopcion', [\App\Http\Controllers\AnimalController::class, 'index'])->name('AdopcionAdmin.index');
     Route::post('/adopcion', [\App\Http\Controllers\AnimalController::class, 'store'])->name('AnimalAdmin.store');

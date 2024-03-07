@@ -1,6 +1,9 @@
 @if(session('status'))
     <div class="bg-green-600 text-green-600 text-center text-lg font-bold p-2 ">{{session('status')}}</div>
 @endif
+@if(session('statusred'))
+    <div class="bg-green-600 text-red-600 text-center text-lg font-bold p-2 ">{{session('statusred')}}</div>
+@endif
 
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->
@@ -29,6 +32,9 @@
                     </x-nav-link>
                             <x-nav-link :href="route('AdopcionAdmin.solicitudesAdoption')" :active="request()->routeIs('AdopcionAdmin.solicitudesAdoption')">
                                 {{ __('Solicitudes') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('ProductAdmin.index')" :active="request()->routeIs('ProductAdmin.index')">
+                                {{ __('Productos') }}
                             </x-nav-link>
 
                         @elseif (Auth::user()->role->name == 'USER')

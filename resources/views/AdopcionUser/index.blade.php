@@ -224,7 +224,8 @@
                     <h2 class="T1">
                         Animales en adopcion
                     </h2>
-                    <h3>¡Te mostramos acontinuacion a nuestros peludos disponibles para que hagan parte de tu familia!</h3>
+                    <h3 >¡Te mostramos acontinuacion a nuestros peludos disponibles para que hagan parte de tu familia!</h3>
+                    <x-text-input id="buscar" type="text" id="searchInput" placeholder="Buscar..." class="hidden sm:flex sm:items-right sm:ml-3"></x-text-input>
                 </div>
 
                 <div class="container p-6 text-gray-900 dark:text-gray-100">
@@ -318,6 +319,27 @@
     </div>
 
     <script>
+        //******BARRA DE BUSQUEDA**************
+        const searchInput = document.getElementById('searchInput');
+        const items = document.querySelectorAll('.item');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            items.forEach(item => {
+                const nombre = item.querySelector('.nombre h1').textContent.toLowerCase();
+                const raza = item.querySelector('h3:nth-of-type(1)').textContent.toLowerCase();
+                const edad = item.querySelector('h3:nth-of-type(2)').textContent.toLowerCase();
+                //const fecha = item.querySelector('.fecha').textContent.toLowerCase();
+
+                if (nombre.includes(searchTerm) || raza.includes(searchTerm) || edad.includes(searchTerm)/* || fecha.includes(searchTerm)*/) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+        //*****FIN BARRA DE BUSQUEDA****************
         function enviarCorreo(animalId) {
             var form = document.getElementById('emailForm' + animalId);
             form.submit();
