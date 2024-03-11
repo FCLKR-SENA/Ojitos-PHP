@@ -4,6 +4,9 @@
 @if(session('statusred'))
     <div class="bg-green-600 text-red-600 text-center text-lg font-bold p-2 ">{{session('statusred')}}</div>
 @endif
+@if(session('statusorange'))
+    <div class="bg-green-600 text-orange-600 text-center text-lg font-bold p-2 ">{{session('statusorange')}}</div>
+@endif
 
 <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
     <!-- Primary Navigation Menu -->

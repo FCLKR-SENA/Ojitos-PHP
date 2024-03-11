@@ -1,4 +1,31 @@
 <style>
+
+    /* Estilos para el contenedor */
+    .select-container {
+        background: linear-gradient(to bottom, #202838, #202838); /* Fondo entre azul y gris oscuro */
+        border: 2px solid #4e56ee; /* Borde morado */
+        border-radius: 5px; /* Borde redondeado */
+        padding: 6px; /* Espacio interno */
+        width: 40%; /* Ancho completo */
+    }
+
+    /* Estilos para el select */
+    .select-container select {
+        width: 100%; /* Ancho completo */
+        padding: 6px; /* Espacio interno */
+        border: none; /* Sin borde */
+        outline: none; /* Sin contorno */
+        background: none; /* Fondo transparente */
+        color: white; /* Color del texto */
+        appearance: none; /* Eliminar apariencia nativa del select */
+        cursor: pointer; /* Cursor de selección */
+    }
+
+    /* Estilos para las opciones del select */
+    .select-container select option {
+        background: #34495e; /* Fondo */
+        color: white; /* Color del texto */
+    }
     #confirmationModal {
     display: none;
     position: fixed;
@@ -70,15 +97,21 @@
                         <!--Fecha de encuentro-->
                         <div class="mt-3">
                             <x-input-label for="fechaEncuentro" :value="__('¿Cuando se encontro')" />
-                            <x-text-input id="fechaEncuentro" class="block mt-1 w-full" type="date" name="fechaEncuentro" :value="old('fechaEncuentro',$animal->fechaEncuentro)" required autofocus autocomplete="fechaEncuentro" />
+                            <x-text-input id="fechaEncuentro" class="block mt-1 w-full" type="date" name="fechaEncuentro" :value="old('fechaEncuentro',$animal->fechaEncuentro)" :min="date('Y-m-d')" required autofocus autocomplete="fechaEncuentro" />
                             <x-input-error :messages="$errors->get('fechaEncuentro')" class="mt-2" />
                         </div>
 
                         <!--Especie-->
-                        <div class="mt-3">
+                        <div class="mt-3 select-container">
                             <x-input-label for="especie_Animal" :value="__('Especifique la especie')" />
-                            <x-text-input id="especie_Animal" class="block mt-1 w-full" type="text" name="especie_Animal" :value="old('especie_Animal',$animal->especie_Animal)" required autofocus autocomplete="especie_Animal" />
-                            <x-input-error :messages="$errors->get('especie_Animal')" class="mt-2" />
+                            <select id="especie_Animal" class="block mt-1" name="especie_Animal">
+                                <option value="{{$animal->especie_Animal}}">{{$animal->especie_Animal}}</option>
+                                @if($animal->especie_Animal=='Gato')
+                                <option value="Perro">Perro</option>
+                                @else
+                                <option value="Gato">Gato</option>
+                                @endif
+                            </select>
                         </div>
 
                         <!--Nombre asignado-->
@@ -108,6 +141,7 @@
                             <x-text-input id="observacionesAnimal" class="block mt-1 w-full" type="text" name="observacionesAnimal" :value="old('observacionesAnimal',$animal->observacionesAnimal)" required autofocus autocomplete="observacionesAnimal" />
                             <x-input-error :messages="$errors->get('observacionesAnimal')" class="mt-2" />
                         </div>
+
 
                         <div class="mt-4 bg-white dark:bg-gray-800 shadow-sm rounded-lg divide-y dark:divide-gray-900">
                             <div class="container relative">

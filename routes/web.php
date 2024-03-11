@@ -48,8 +48,7 @@ Route::get('/dashboardAdmin', function () {
 
 Route::middleware(['auth', 'verified', 'roles:ADMIN'])->group(function () {
 
-
-
+//***********PRODUCTOS****************************
     Route::get('/productos', [\App\Http\Controllers\ProductController::class, 'index'])->name('ProductAdmin.index');
     Route::post('/productos', [\App\Http\Controllers\ProductController::class, 'store'])->name('ProductAdmin.store');
     Route::get('/products/{product}/edit', [\App\Http\Controllers\ProductController::class, 'edit'])
@@ -58,11 +57,17 @@ Route::middleware(['auth', 'verified', 'roles:ADMIN'])->group(function () {
         ->name('products.update');
     Route::delete('/products/{product}', [\App\Http\Controllers\ProductController::class, 'destroy'])
         ->name('products.destroy');
+//**********FIN PRODUCTO*************************
 
+//**********ADOPCION******************************
     Route::get('/adopcion', [\App\Http\Controllers\AnimalController::class, 'index'])->name('AdopcionAdmin.index');
     Route::post('/adopcion', [\App\Http\Controllers\AnimalController::class, 'store'])->name('AnimalAdmin.store');
 
+    Route::post('/gestionAdopcion', [\App\Http\Controllers\AdoptionController::class, 'aprobarAdopcion'])->name('AdopcionAdmin.aprobacion');
+
     Route::get('/solicitudes', [\App\Http\Controllers\AdoptionController::class, 'index'])->name('AdopcionAdmin.solicitudesAdoption');
+    Route::post('/solicitudes', [\App\Http\Controllers\AdoptionController::class, 'concluirAdopcion'])->name('AdopcionAdmin.conclusionAdopcion');
+    Route::post('/Rsolicitudes', [\App\Http\Controllers\AdoptionController::class, 'rechazar'])->name('AdopcionAdmin.rechazarAdopcion');
 
 
     Route::get('/animals/{animal}/edit', [AnimalController::class,'edit'])
@@ -73,7 +78,7 @@ Route::middleware(['auth', 'verified', 'roles:ADMIN'])->group(function () {
     ->name('Animals.update');
     Route::delete('animals/{animal}',[AnimalController::class,'destroy'])
         ->name('Animals.delete');
-
+//********** FIN ADOPCION ***************************
 });
 
 

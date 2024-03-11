@@ -121,7 +121,7 @@
     .modal-contentdes {
         background-color: #1a282f;
         margin: 15% auto;
-        padding: 20px;
+        padding: 10px;
         border: 1px solid #888;
         width: 50%;
     }
@@ -258,7 +258,18 @@
                                 <div class="modal-info-container py-12 px-6 ">
                                 <!-- Contenido de la información adicional del animal -->
                                     <div class="modal-column ">
-                                <img src="{{ asset($animal->img) }}" style="max-width: 100%; max-height: 100%;" alt="imagen" >
+                                <img src="{{ asset($animal->img) }}" style="max-width: 100%; max-height: 100%; margin-bottom: 5%" alt="imagen" >
+                                        <p style="font-size: 120%; font-style: normal; font-weight: bold; margin-bottom: 4%">Vacunas:</p>
+                                        @if ($animal->vacunasModal)
+                                            <ul>
+                                                @foreach ($animal->vacunasModal as $vacunaModal)
+                                                    <li style="margin-bottom: 3%">* {{ $vacunaModal->nombre }} <p style="font-family: 'Roboto Slab', serif ; font-size: 110%; color:  @if($vacunaModal->adquisicion == 'Aplicada')  #22b14c @else #d39e00 @endif ">({{ $vacunaModal->adquisicion }})</p> </li>
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <p style="margin-bottom: 10%">No se encontraron vacunas para este animal.</p>
+                                            <p>¡Puedes adquirir las vacunas!.</p>
+                                        @endif
                                     </div>
 
                                     <div class="modal-column ">
@@ -268,7 +279,8 @@
                                 <p>Especie: {{ $animal->especie_Animal }}</p>
                                 <p>Raza: {{ $animal->raza }}</p>
                                 <p>Edad: {{ $animal->age }}</p>
-                                <p >">Observaciones: {{ $animal->observacionesAnimal }}</p>
+
+                                <p>Observaciones: {{ $animal->observacionesAnimal }}</p>
                                         <div class="modal-container-botons">
                                             <div class="modal-boton1">
                                                 <button class="SinfoButton"  onclick="enviarCorreo('{{ $animal->id }}')">Mas Informacion</button>

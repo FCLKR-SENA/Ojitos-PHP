@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProductController extends Controller
 {
@@ -66,12 +68,24 @@ class ProductController extends Controller
         $product->stock = $request->stock;
 
         if ($request->hasFile('img')) {
+            // Delete the previous image if it exists
+            if ($product->img) {
+                Storage::disk('public')->delete($product->img);
+            }
+
             $image = $request->file('img');
             $imagePath = $image->store('product_images', 'public');
             $product->img = $imagePath;
         }
+
         $product->save();
 
         return redirect()->route('ProductAdmin.index')->with('success', 'Producto actualizado exitosamente.');
+    }
+    public function destroy(Product $product)
+    {
+        $product->delete();
+
+        return redirect()->route('ProductAdmin.index')->with('success', 'Producto eliminado exitosamente.');
     }
 }

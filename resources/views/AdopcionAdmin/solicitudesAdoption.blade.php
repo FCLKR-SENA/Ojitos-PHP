@@ -152,7 +152,7 @@
         cursor: pointer;
     }
 
-    #confirmationModalDelete {
+    #confirmationModalConcluir, #confirmationModalRechazar,  #confirmationModalAprobar{
         display: none;
         position: fixed;
         z-index: 1000;
@@ -160,7 +160,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.93);
+        background-color: rgba(0, 0, 0, 0.9);
     }
     #confirmationModal {
         display: none;
@@ -198,6 +198,11 @@
 
     #cancelButton {
         background-color: red;
+        color: white;
+    }
+
+    #succesButton, #succesRButton, #succesAButton {
+        background-color: #198f1b;
         color: white;
     }
 
@@ -322,8 +327,8 @@
                                             @if($adopcion->created_at != $adopcion->updated_at)
                                                 <small class="text-sm text-black-600 dark:text-black-400">&middot; {{__('Actualizado')}}</small>
                                             @endif
-                                            @if($adopcion->adoption_status != "Aprobado")
-                                                <x-primary-button class="mt-4 flex sm:justify-center h-1/5"  onclick="openInfoModal('{{ $adopcion->id_animaladopcion }}')">Gestionar</x-primary-button>
+                                            @if($adopcion->adoption_status != "Adoptado")
+                                                <x-primary-button class="mt-4 flex sm:justify-center h-1/5"  onclick="openInfoModal('{{ $adopcion->id_animaladopcion }}')">  @if($adopcion->adoption_status == "En proceso") Gestionar @else Ver @endif</x-primary-button>
                                             @endif
 
                                             <!-- ******************MODAL PARA INFORMACIÓN***************-->
@@ -344,20 +349,48 @@
                                                             <p style="margin-top: 2%;">Observaciones: {{ $adopcion->animals->observacionesAnimal }}</p>
 
                                                             <!-- BTNS DE GESTION-->
-                                                            <form id="emailForm{{ $adopcion->id_animaladopcion }}" action="{{ route('enviar-correo') }}" method="POST" style="display: none;">
+                                                            <form id="aprobarForm{{ $adopcion->id_animaladopcion }}" action="{{route('AdopcionAdmin.aprobacion')}}" method="POST" style="display: none;">
                                                                 @csrf
                                                                 <input type="hidden" name="animal_id" value="{{ $adopcion->id_animaladopcion }}">
                                                             </form>
                                                             <div class="modal-container-buttons" style="display: flex; justify-content: space-between; margin-top: 3%; margin-right: 20%">
-                                                                <div class="modal-boton1" style="display: flex; justify-content: left;">
-                                                                    <x-secondary-button class="SinfoButton" style="background-color: #c80000; padding: 5%;" onclick="enviarCorreo('{{ $adopcion->id_animaladopcion }}')">Rechazar</x-secondary-button>
+                                                                    <form id="rechazarForm{{ $adopcion->id_animaladopcion }}" action="{{route('AdopcionAdmin.rechazarAdopcion')}}" method="POST" style="display: none;">
+                                                                        @csrf
+                                                                        <input type="hidden" name="animal_id" value="{{ $adopcion->id_animaladopcion }}">
+                                                                    </form>
+                                                                    <div class="modal-boton1" style="display: flex; justify-content: left;">
+                                                                    <x-secondary-button class="SinfoButton" style="background-color: #c80000; padding: 5%;" onclick="rechazarAdopcion('{{ $adopcion->id_animaladopcion }}')">
+                                                                        @if($adopcion->adoption_status == "En proceso")
+                                                                            Rechazar
+                                                                        @else
+                                                                            Cancelar Proceso
+                                                                        @endif</x-secondary-button>
                                                                 </div>
 
-                                                                <div class="modal-boton2" style="display: flex; justify-content: right;">
-                                                                    <a href="http://localhost:8000/formadoption?animal_id={{ $adopcion->id_animaladopcion }}">
-                                                                        <x-primary-button class="SadoptarButton">Aprobar</x-primary-button>
-                                                                    </a>
-                                                                </div>
+
+                                                                <!--*****Aprobacion de adopcion******-->
+                                                                <form id="aprobarForm{{ $adopcion->id_animaladopcion }}" action="{{route('AdopcionAdmin.aprobacion')}}" method="POST" style="display: none;">
+                                                                    @csrf
+                                                                    <input type="hidden" name="animal_id" value="{{ $adopcion->id_animaladopcion }}">
+                                                                </form>
+
+                                                                    @if($adopcion->adoption_status == "P. Entrega")
+                                                                        <form id="concluirForm{{ $adopcion->id_animaladopcion }}" action="{{route('AdopcionAdmin.conclusionAdopcion')}}" method="POST" style="display: none;">
+                                                                            @csrf
+                                                                            <input type="hidden" name="animal_id" value="{{ $adopcion->id_animaladopcion }}">
+                                                                        </form>
+                                                                        <div class="modal-boton2" style="display: flex; justify-content: right;">
+                                                                            <x-primary-button class="SadoptarButton" onclick="concluirAdopcion('{{ $adopcion->id_animaladopcion }}')">Terminar</x-primary-button>
+                                                                        </div>
+
+                                                                    @elseif($adopcion->adoption_status != "P. Vacuna")
+                                                                        <div class="modal-boton2" style="display: flex; justify-content: right;">
+                                                                            <x-primary-button class="SadoptarButton" onclick="aprobacionAdopcion('{{ $adopcion->id_animaladopcion }}')">Aprobar</x-primary-button>
+                                                                        </div>
+                                                                    @endif
+                                                                    <!-----Fin aprobacion------->
+                                                                <!-----Fin aprobacion------->
+
                                                             </div>
                                                             <!-- FIN BOTONES DE GESTION------------------------------->
                                                         </div>
@@ -410,6 +443,46 @@
         </div>
     </div>
 
+
+    <!--*******************************************-->
+    <!-- Cuadro de confirmación TERMINAR PROCESO-->
+    <div id="confirmationModalConcluir" style="display: none">
+        <div id="confirmationBox">
+            <h2 class="con">Confirmación</h2>
+            <p class="parcon">¿Han recogido al Animal?</p>
+            <button id="succesButton" >Confirmar</button>
+            <button id="cancelButton" onclick="closeConfirmationCon()">Cancelar</button>
+        </div>
+    </div>
+    <!----FIN CUADRO DE CONFIRMACION--->
+    <!--***********************************************-->
+
+    <!--*******************************************-->
+    <!-- Cuadro de confirmación RECHAZAR PROCESO-->
+    <div id="confirmationModalRechazar" style="display: none">
+        <div id="confirmationBox">
+            <h2 class="con">Confirmación</h2>
+            <p class="parcon">¿Seguro de rechazar el proceso?</p>
+            <button id="succesRButton" >Confirmar</button>
+            <button id="cancelButton" onclick="closeConfirmationRez()">Cancelar</button>
+        </div>
+    </div>
+    <!----FIN CUADRO DE CONFIRMACION RECHAZO--->
+    <!--***********************************************-->
+
+    <!--*******************************************-->
+    <!-- Cuadro de confirmación APROBAR PROCESO-->
+    <div id="confirmationModalAprobar" style="display: none">
+        <div id="confirmationBox">
+            <h2 class="con">Confirmación</h2>
+            <p class="parcon">¿Desea dar continuidad?</p>
+            <button id="succesAButton" >Confirmar</button>
+            <button id="cancelButton" onclick="closeConfirmationApr()">Cancelar</button>
+        </div>
+    </div>
+    <!----FIN CUADRO DE CONFIRMACION APRBACION--->
+    <!--***********************************************-->
+
     <!--MODAL PARA IMAGEN-->
     <div id="imageModal" class="modal">
         <span class="close" onclick="closeModal()">&times;</span>
@@ -426,17 +499,87 @@
         </div>
     </div>
 
-    <!-- Cuadro de confirmación Eliminar-->
-    <div id="confirmationModalDelete">
-        <div id="confirmationBox">
-            <h2 class="con">Confirmación</h2>
-            <p class="parcon">¿Estás seguro deseas eliminar?</p>
-            <x-primary-button onclick="confirmActionDel()" class="mt-4 flex sm:justify-center h-8">Confirmar</x-primary-button>
-            <button id="cancelButton" onclick="closeConfirmationDel()">Cancelar</button>
-        </div>
-    </div>
+
 
     <script>
+        //*****Aprobacion de adopcion******
+        function aprobarAdopcion(adopcionId) {
+            document.getElementById('aprobarForm' + adopcionId).submit();
+        }
+        //****FIN APROBACION**********
+
+
+        //*****APROBACION de adopcion******
+        function confirmActionApr(formId) {
+            // Submit the form associated with the provided ID
+            document.getElementById(formId).submit();
+        }
+        function aprobacionAdopcion(adopcionId) {
+            // Almacenamos el ID del formulario en una variable
+            var formId = 'aprobarForm' + adopcionId;
+            // Mostramos el modal de confirmación
+
+            document.getElementById('infoModal' + adopcionId).style.display = 'none';
+            document.getElementById('confirmationModalAprobar').style.display = 'block';
+            // Asignamos un event listener al botón de confirmar dentro del modal
+            // Cuando se hace clic en el botón de confirmar, se activa la función confirmActionCon(formId) para enviar el formulario asociado con formId
+            document.getElementById('succesAButton').onclick = function() {
+                confirmActionRez(formId);
+            };
+        }
+        function closeConfirmationApr() {
+            document.getElementById('confirmationModalAprobar').style.display = 'none';
+        }
+        //****FIN APROBACION adopcion**********
+
+
+        //*****RECHAZO de adopcion******
+        function confirmActionRez(formId) {
+            // Submit the form associated with the provided ID
+            document.getElementById(formId).submit();
+        }
+        function rechazarAdopcion(adopcionId) {
+            // Almacenamos el ID del formulario en una variable
+            var formId = 'rechazarForm' + adopcionId;
+            // Mostramos el modal de confirmación
+
+            document.getElementById('infoModal' + adopcionId).style.display = 'none';
+            document.getElementById('confirmationModalRechazar').style.display = 'block';
+            // Asignamos un event listener al botón de confirmar dentro del modal
+            // Cuando se hace clic en el botón de confirmar, se activa la función confirmActionCon(formId) para enviar el formulario asociado con formId
+            document.getElementById('succesRButton').onclick = function() {
+                confirmActionRez(formId);
+            };
+        }
+        function closeConfirmationRez() {
+            document.getElementById('confirmationModalRechazar').style.display = 'none';
+        }
+        //****FIN RECHAZADOadopcion**********
+
+
+        //*****concluision de adopcion******
+        function confirmActionCon(formId) {
+            // Submit the form associated with the provided ID
+            document.getElementById(formId).submit();
+        }
+        function concluirAdopcion(adopcionId) {
+            // Almacenamos el ID del formulario en una variable
+            var formId = 'concluirForm' + adopcionId;
+            // Mostramos el modal de confirmación
+
+            document.getElementById('infoModal' + adopcionId).style.display = 'none';
+            document.getElementById('confirmationModalConcluir').style.display = 'block';
+            // Asignamos un event listener al botón de confirmar dentro del modal
+            // Cuando se hace clic en el botón de confirmar, se activa la función confirmActionCon(formId) para enviar el formulario asociado con formId
+            document.getElementById('succesButton').onclick = function() {
+                confirmActionCon(formId);
+            };
+        }
+        function closeConfirmationCon() {
+            document.getElementById('confirmationModalConcluir').style.display = 'none';
+        }
+        //****FIN conclusion adopcion**********
+
         function enviarCorreo(animalId) {
             var form = document.getElementById('emailForm' + animalId);
             form.submit();
@@ -521,8 +664,8 @@
                 const rows = dataTable.getElementsByTagName('tr');
 
                 for (let i = 1; i < rows.length; i++) {
-                    let found = false;
                     const cells = rows[i].getElementsByTagName('td');
+                    let found = false;
 
                     for (let j = 0; j < cells.length; j++) {
                         const cellValue = cells[j].textContent.toLowerCase();
@@ -532,11 +675,7 @@
                         }
                     }
 
-                    if (found) {
-                        rows[i].style.display = '';
-                    } else {
-                        rows[i].style.display = 'none';
-                    }
+                    rows[i].style.display = found ? '' : 'none';
                 }
             });
         });

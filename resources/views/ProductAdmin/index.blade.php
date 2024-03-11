@@ -1,4 +1,46 @@
 <style>
+    .product-image {
+        max-width: 80px;
+        max-height: 80px;
+        cursor: pointer;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
     table {
         border-collapse: collapse;
         width: 100%;
@@ -92,6 +134,49 @@
 
     .parcon{
     color: #ffffff;
+
+    }
+    .animal-image {
+         max-width: 80px;
+         max-height: 80px;
+         cursor: pointer;
+     }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.9);
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 90%;
+        max-height: 90%;
+    }
+
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #f1f1f1;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
     }
 </style>
 <x-app-layout>
@@ -183,13 +268,13 @@
                                         <tr>
                                             <td>
                                                 @if($product->img)
-                                                    <img src="{{ asset($product->img) }}" style="max-width: 80px; max-height: 80px;" alt="imagen">
+                                                    <img src="{{ asset('storage/' . $product->img) }}" style="max-width: 80px; max-height: 80px;" alt="imagen" onclick="openModal('{{ asset('storage/' . $product->img) }}')">
                                                 @else
                                                     No hay imagen
                                                 @endif
                                             </td>
                                             <td>{{ $product->product_name }}</td>
-                                            <td>{{ $product->product_price }}</td>
+                                            <td>${{ $product->product_price }}</td>
                                             <td>{{ $product->descripcion }}</td>
                                             <td>{{ $product->stock }}</td>
                                             <td>
@@ -205,10 +290,10 @@
                                                         <x-dropdown-link href="{{ route('products.edit', $product->id_product) }}">
                                                             Editar
                                                         </x-dropdown-link>
-                                                        <form method="POST" action="{{ route('products.destroy', $product->id_product) }}">
+                                                        <form method="POST" action="{{ route('products.destroy', $product->id_product) }}" id="deleteForm{{ $product->id_product }}">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <x-dropdown-link href="#" onclick="event.preventDefault();this.closest('form').submit();">
+                                                            <x-dropdown-link href="#" onclick="event.preventDefault(); openConfirmationDel({{ $product->id_product }});">
                                                                 Eliminar
                                                             </x-dropdown-link>
                                                         </form>
@@ -224,6 +309,38 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!--MODAL PARA IMAGEN-->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" class="modal-content" src="" alt="imagen">
+    </div>
+
+    <!-- Cuadro de confirmación Registro -->
+    <div id="confirmationModal">
+        <div id="confirmationBox">
+            <h2 class="con">Confirmación</h2>
+            <p class="parcon">¿Estás seguro de realizar el registro?</p>
+            <x-primary-button onclick="confirmAction()" class="mt-4 flex sm:justify-center h-8" >Confirmar</x-primary-button>
+            <!--<button id="confirmButton" onclick="confirmAction()">Confirmar</button>-->
+            <button id="cancelButton" onclick="closeConfirmation()">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Cuadro de confirmación Eliminar-->
+    <div id="confirmationModalDelete" style="display: none;">
+        <div id="confirmationBox">
+            <h2 class="con">Confirmación</h2>
+            <p class="parcon">¿Estás seguro deseas eliminar?</p>
+            <x-primary-button onclick="confirmActionDel()" class="mt-4 flex sm:justify-center h-8" >Confirmar</x-primary-button>
+            <button id="cancelButton" onclick="closeConfirmationDel()">Cancelar</button>
+        </div>
+    </div>
+    <!--MODAL PARA IMAGEN-->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" class="modal-content" src="" alt="imagen">
     </div>
 
     <script>
@@ -276,5 +393,48 @@
                 }
             });
         });
+    </script>
+    <script>
+        var productIdToDelete; // Variable global para almacenar el ID del producto a eliminar
+
+        // Función para mostrar el cuadro de confirmación de eliminación
+        function openConfirmationDel(productId) {
+            productIdToDelete = productId; // Almacenar el ID del producto a eliminar
+            document.getElementById('confirmationModalDelete').style.display = 'block';
+        }
+
+        // Función para confirmar la eliminación
+        function confirmActionDel() {
+            // Enviar el formulario de eliminación del producto
+            document.getElementById('deleteForm' + productIdToDelete).submit();
+
+            // Cerrar el cuadro de confirmación después de enviar el formulario
+            closeConfirmationDel();
+        }
+
+        // Función para cerrar el cuadro de confirmación
+        function closeConfirmationDel() {
+            document.getElementById('confirmationModalDelete').style.display = 'none';
+        }
+
+        // Cerrar el cuadro de confirmación al hacer clic fuera de él
+        window.onclick = function(event) {
+            var modal = document.getElementById('confirmationModalDelete');
+            if (event.target == modal) {
+                closeConfirmationDel();
+            }
+        }
+        function openModal(imageSrc) {
+            var modal = document.getElementById('imageModal');
+            var modalImg = document.getElementById('modalImage');
+            modal.style.display = "block";
+            modalImg.src = imageSrc;
+        }
+
+        function closeModal() {
+            var modal = document.getElementById('imageModal');
+            modal.style.display = "none";
+        }
+
     </script>
 </x-app-layout>

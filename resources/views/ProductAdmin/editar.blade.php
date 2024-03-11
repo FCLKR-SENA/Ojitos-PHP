@@ -86,7 +86,15 @@
                             <x-input-error :messages="$errors->get('stock')" class="mt-2" />
                         </div>
                         <div class="mt-3">
-                            <x-input-label for="img" :value="__('Imagen del producto')" />
+                            <x-input-label for="current_img" :value="__('Imagen actual del producto')" />
+                            @if($product->img)
+                                <img src="{{ asset('storage/' . $product->img) }}" alt="Current Image" class="mt-2" style="max-width: 200px;">
+                            @else
+                                <p>No hay imagen actual</p>
+                            @endif
+                        </div>
+                        <div class="mt-3">
+                            <x-input-label for="img" :value="__('Nueva imagen del producto')" />
                             <input id="img" class="block mt-1 w-full" type="file" name="img" />
                         </div>
                         <x-primary-button class="mt-4 flex sm:justify-center h-8">Actualizar Producto</x-primary-button>

@@ -1,4 +1,31 @@
 <style>
+
+    /* Estilos para el contenedor */
+    .select-container {
+        background: linear-gradient(to bottom, #202838, #202838); /* Fondo entre azul y gris oscuro */
+        border: 2px solid #4e56ee; /* Borde morado */
+        border-radius: 5px; /* Borde redondeado */
+        padding: 6px; /* Espacio interno */
+        width: 40%; /* Ancho completo */
+    }
+
+    /* Estilos para el select */
+    .select-container select {
+        width: 100%; /* Ancho completo */
+        padding: 6px; /* Espacio interno */
+        border: none; /* Sin borde */
+        outline: none; /* Sin contorno */
+        background: none; /* Fondo transparente */
+        color: white; /* Color del texto */
+        appearance: none; /* Eliminar apariencia nativa del select */
+        cursor: pointer; /* Cursor de selección */
+    }
+
+    /* Estilos para las opciones del select */
+    .select-container select option {
+        background: #34495e; /* Fondo */
+        color: white; /* Color del texto */
+    }
     .modal {
         display: none;
         position: fixed;
@@ -168,17 +195,18 @@
                         <!--Fecha de encuentro-->
                         <div class="mt-3">
                             <x-input-label for="fechaEncuentro" :value="__('¿Cuando se encontro')" />
-                            <x-text-input id="fechaEncuentro" class="block mt-1 w-full" type="date" name="fechaEncuentro"  autofocus autocomplete="fechaEncuentro" />
+                            <x-text-input id="fechaEncuentro" class="block mt-1 w-full" type="date" name="fechaEncuentro" :min="date('Y-m-d')" autofocus autocomplete="fechaEncuentro" />
                             <x-input-error :messages="$errors->get('fechaEncuentro')" class="mt-2" />
                         </div>
 
                         <!--Especie-->
-                        <div class="mt-3">
+                        <div class="mt-3 select-container">
                             <x-input-label for="especie_Animal" :value="__('Especifique la especie')" />
-
-
-                            <x-text-input id="especie_Animal" class="block mt-1 w-full" type="text" name="especie_Animal" :value="old('name')" required autofocus autocomplete="especie_Animal" />
-                            <x-input-error :messages="$errors->get('especie_Animal')" class="mt-2" />
+                            <select id="especie_Animal" class="block mt-1" name="especie_Animal">
+                                <option value="">Selecciona una opción</option>
+                                <option value="Perro">Perro</option>
+                                <option value="Gato">Gato</option>
+                            </select>
                         </div>
 
                         <!--Nombre asignado-->
@@ -209,6 +237,35 @@
                             <x-input-error :messages="$errors->get('observacionesAnimal')" class="mt-2" />
                         </div>
 
+                        <!--CheckBoX VACUNAS GATO-->
+                        <div class="block mt-3 w-full form-group" id="opcionesGato"   style="display: none">
+                            <x-input-label for="vacunacionG"  :value="__('Esquema de Vacunacion G')" />
+                            @foreach ($todasLasVacunas as $vacuna)
+                                @if ($vacuna->especie === 'Gato')
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="vacunas[]" value="{{ $vacuna->id }}">
+                                        <label class="form-check-label" for="vacuna{{ $vacuna->id }}">
+                                            {{ $vacuna->nombre }}
+                                        </label>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+
+                        <!--CheckBoX VACUNAS PERRO-->
+                        <div class="block mt-3 w-full form-group" id="opcionesPerro"   style="display: none">
+                            <x-input-label for="vacunacionP"  :value="__('Esquema de Vacunacion P')" />
+                            @foreach ($todasLasVacunas as $vacuna)
+                                @if ($vacuna->especie === 'Perro')
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="vacunas[]" value="{{ $vacuna->id }}">
+                                        <label class="form-check-label " for="vacuna{{ $vacuna->id }}">
+                                            {{ $vacuna->nombre }}
+                                        </label>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
                         <div class="mt-4 bg-white dark:bg-gray-800 shadow-sm rounded-lg divide-y dark:divide-gray-900">
                             <div class="container relative">
                                 <div class="flex sm:justify-between h-8">
@@ -274,7 +331,7 @@
                             <td>{{ $animal->especie_Animal }}</td>
                             <td>{{ $animal->raza }}</td>
                             <td>{{ $animal->age}}</td>
-                            <td>{{ $animal->observacionesAnimal }}</td>
+                            <td >{{ $animal->observacionesAnimal }}</td>
                             <td
                                 class="updated_at">{{$animal->updated_at}}
                                 @if($animal->created_at != $animal->updated_at)
@@ -282,6 +339,7 @@
                                @endif
                             <td>{{ $animal->estadoSolicitud }}
                                <!--can('update',$animal)-->
+                                @if($animal->estadoSolicitud !='Solicitado')
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         @csrf
@@ -304,6 +362,7 @@
                                         </form>
                                     </x-slot>
                                 </x-dropdown>
+                                @endif
                                 <!-- endcan-->
                             </td>
                             <!--<td>
@@ -371,6 +430,26 @@
 
 
     <script>
+        //Generar checkbox dependiendo del SELECT
+        document.getElementById('especie_Animal').addEventListener('change', function() {
+            var especie_Animal = this.value;
+            var opcionesPerro = document.getElementById('opcionesPerro');
+            var opcionesGato = document.getElementById('opcionesGato');
+
+            if (especie_Animal === 'Perro') {
+                opcionesPerro.style.display = 'block';
+                opcionesGato.style.display = 'none';
+            } else if (especie_Animal=== 'Gato') {
+                opcionesPerro.style.display = 'none';
+                opcionesGato.style.display = 'block';
+            } else {
+                opcionesPerro.style.display = 'none';
+                opcionesGato.style.display = 'none';
+            }
+        });
+        //FIN DEL CHECKBOX DEPENDIENTE DEL SELECT
+
+
         function openModal(imageSrc) {
             var modal = document.getElementById('imageModal');
             var modalImg = document.getElementById('modalImage');

@@ -10,6 +10,7 @@ class Adoption extends Model
 
     use HasFactory;
     protected $table = 'adopcion';
+    protected $primaryKey = 'id_animaladopcion';
     protected $fillable = [
         'fecha_adopcion',
         'animal_adopcioncol',

@@ -10,6 +10,7 @@ class Animal extends Model
 {
     use HasFactory;
     protected $table = 'animales_en_adopcion';
+    protected $primaryKey = 'id';
     protected $fillable=[
 
         'fechaEncuentro',
@@ -37,6 +38,28 @@ class Animal extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function vacunas()
+    {
+        return $this->hasMany(Animal_vacuna::class, 'animal_id');
+    }
+
+    public function vacunasModal()
+    {
+        return $this->belongsToMany(Vacuna::class);
+    }
+
+
+    //**FUNCION PARA ENCONTRAR LOS REGISTROS DE LA TABLA VACUNAS Y ELIMINARLOS***
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($animal) {
+            $animal->vacunas()->delete();
+        });
+    }
+
+    //**FIN DE LA FUNCION (RECORDAR QUE PARA USAR LO ANTERIOR SE DEBEN RELACIONAR LAS TABLAS***
 
 }
 

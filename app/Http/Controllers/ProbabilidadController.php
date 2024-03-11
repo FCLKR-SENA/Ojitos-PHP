@@ -114,6 +114,11 @@ class ProbabilidadController extends Controller
                 //'user_id' => auth()->id() ,//Trae el ID de quien se esta logueando COD2
             ]);
 
+            //****ACTUALIZAR ESTADO EN TABLA ANIMALES EN ADOPCION****
+            $status="Solicitado";
+            DB::statement('CALL updateStatusAnimalList(?,?)',[$animal_id,$status]);
+            //*** FIN ACTUALIZACION DE TABLA**************
+
             return  to_route('AdopcionUser.index')->with('status','Se ha enviado tu solicitud de adopcion');
 
         }else{

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Animal;
+use App\Models\Animal_vacuna;
 use App\Models\User;
+use App\Models\Vacuna;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 
 class AnimalController extends Controller
@@ -25,20 +28,39 @@ class AnimalController extends Controller
 
     public function index()
     {
-        //$animals = Animal::with('user')->orderBy('created_at', 'desc')->get();
-        return view ('AdopcionAdmin.index',[
-            'animals'=> Animal::with('user')->latest()->get()
-           // 'animals'=> Animal::all() Original
-        ]); //Comunicacion con "route" en Web"
+        $todasLasVacunas = Vacuna::all();
+        $animales = Animal::with('user',)
+            ->where('estadoSolicitud', 'Solicitado')
+            ->orWhere('estadoSolicitud', 'Disponible')
+            ->latest()
+            ->get();
+
+        return view('AdopcionAdmin.index', [
+            'animals' => $animales,
+            'todasLasVacunas' => $todasLasVacunas
+        ]);
+    }
+
+    public function mostrarVacunasModal($animalId)
+    {
+        $vacunas = DB::select('CALL encontrar_vacunas_modal(?)', [$animalId]);
+        return $vacunas;
     }
 
     public function indexUser()
     {
+        $todasLasVacunas = Vacuna::all();
+        $animales = Animal::with('user')->latest()->get();
+
+        foreach ($animales as $animal) {
+            $animal->vacunasModal = $this->mostrarVacunasModal($animal->id);
+        }
+
         //$animals = Animal::with('user')->orderBy('created_at', 'desc')->get();
-        return view ('AdopcionUser.index',[
-            'animals'=> Animal::with('user')->latest()->get()
-            // 'animals'=> Animal::all() Original
-        ]); //Comunicacion con "route" en Web"
+        return view('AdopcionUser.index', [
+            'animals' => $animales,
+            'todasLasVacunas' => $todasLasVacunas
+        ]);
     }
 
     /**
@@ -91,7 +113,7 @@ class AnimalController extends Controller
              'raza' =>$request->get  ('raza'),
              'observacionesAnimal' =>$request->get ('observacionesAnimal'),
          ]);*/
-        Animal::create([
+        $animales = Animal::create([
             'fechaEncuentro' =>$request->get ('fechaEncuentro'),
             'especie_Animal' =>$request->get  ('especie_Animal'),
             'nombreAnimaladopocion' =>$request->get  ('nombreAnimaladopocion'),
@@ -99,9 +121,27 @@ class AnimalController extends Controller
             'age'=>$request->get('age'),
             'observacionesAnimal' =>$request->get ('observacionesAnimal'),
             'img' => $rutaImagen
+
             //'user_id' => auth()->id() ,//Trae el ID de quien se esta logueando COD2
         ]);
-        //session()->flash('status','Animal ingresado correctamente'); Otra forma de generar mensajes
+        $idAnimal= $animales->id;
+        $especie = $request->get('especie_Animal');
+        $todasLasVacunas= Vacuna::whereIn('especie', [$especie])->pluck('id');
+
+        // Obtener las vacunas seleccionadas
+        $vacunasSeleccionadas = $request->input('vacunas', []);
+
+        // Insertar todas las vacunas del checkbox
+        foreach ($todasLasVacunas as $vacunaId) {
+            $aplicada = in_array($vacunaId, $vacunasSeleccionadas) ? 'Aplicada' : 'Sin_Aplicar';
+
+            DB::statement('CALL InsertarVacuna(?, ?, ?)', [
+                $idAnimal,
+                $vacunaId,
+                $aplicada
+            ]);
+        }
+        //session()->flash('status','Animal ingresado correctamente'); //Otra forma de generar mensajes
         return  to_route('AdopcionAdmin.index')->with('status','Animal ingresado correctamente'); //Debe redireccionar a la lista de animales registrados
 
     }
@@ -124,13 +164,14 @@ class AnimalController extends Controller
      * @param  \App\Models\Animal  $animal
      * @return \Illuminate\Http\Response
      */
+
+
     public function edit(Animal $animal)
     {
         return view('AdopcionAdmin.editar',[
             'animal' => $animal
         ]);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -141,6 +182,7 @@ class AnimalController extends Controller
     public function update(Request $request, Animal $animal)
 
     {
+
         $rutaImagen = null;
         if ($request->hasFile('img')) {
             $imagen = $request->file('img');
@@ -157,7 +199,7 @@ class AnimalController extends Controller
             'nombreAnimaladopocion' => 'required',
             'raza' => 'required',
             'age' =>'required',
-            'observacionesAnimal' => ['required','min:10' , 'max:255']
+            'observacionesAnimal' => ['required','min:10']
         ]);
 
         $animal->update($validated);
@@ -172,10 +214,9 @@ class AnimalController extends Controller
      * @param  \App\Models\Animal  $animal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Animal $animal)
+    public function destroy( Animal_vacuna $animal_vacuna,Animal $animal,)
     {
         //$this->authorize('delete',$animal) --> Validacion de id logueado con el creado del registro
-
         $animal->delete();
         return  to_route('AdopcionAdmin.index')
             ->with('status',__('Registro eliminado.'));
