@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Adoption;
 use App\Models\Animal;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class ProbabilidadController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, Animal $animal)
     {
         $idUser=Auth::user()->id;
 
@@ -26,6 +28,7 @@ class ProbabilidadController extends Controller
             // Acceder al ID del animal seleccionado
             $animal_id = $request->input('animal_id');
             $animal = Animal::find($animal_id); //Busco por id
+
 
             // Acceder a los demás datos del formulario
             $p1 = $request->input('p1');
@@ -101,7 +104,22 @@ class ProbabilidadController extends Controller
 
             $Pt=($p1+$p2+$p3+$p4+$p5+$p6+$p7+$p8+$p9+$p10)/10;
 
-            Adoption::create([
+
+            //***SUBIR DOCUMENTO***
+            $request->validate([
+                'adjunto' => 'required|mimes:pdf|max:2048',
+            ]);
+
+            $usuario = Auth::user(); // Obtener el cliente autenticado
+
+            $documento = $request->file('adjunto');
+            $nombreDocumento = time() . '_' . $documento->getClientOriginalName();
+            $rutaDocumento = $documento->storeAs('public/documents/' .$nombreDocumento);
+            $rutaDocumento=str_replace('public','storage',$rutaDocumento);
+            //***FIN DOCUMENTO***
+
+
+            $adoption= Adoption::create([
                 //La introduce el admin al momento de aceptar la peticion 'fecha_adopcion' =>  'animal_age',
                 'animal_adopcioncol' => $animal_id,
                 'usuarios_id_usuario'=> Auth::user()->id,
@@ -110,9 +128,38 @@ class ProbabilidadController extends Controller
                 // Inserccion automatica 'updated_at',
                 'probabilidad' => $Pt,
                 'adoption_status' =>"En proceso",
-                'motivo' => $request->get('motivo')
+                'motivo' => $request->get('motivo'),
+                'file' =>$rutaDocumento
                 //'user_id' => auth()->id() ,//Trae el ID de quien se esta logueando COD2
             ]);
+
+            //$adoption = Adoption::find($idUser);
+            //***EVNIO DE CORREOS*****
+            // Crear una instancia del controlador de correo
+
+            $correo = new InformacionAdopcionMail(
+                $adoption,
+                'Solicitud Recibida',
+                'emails.solicitud-adoption'
+            );
+
+            // Llamar al método buildEnvioSolicitud() para construir el correo de rechazo
+            //$correo = $correoController->buildEnvioSolicitud();
+
+            // Enviar el correo
+            Mail::to($correo->adoption->users->email)->send($correo);
+            //***FIN ENVIO DE CORREOS***
+
+            //***ENVIO EMAIL ADMINISTRADORES***
+            $adminEmails = User::where('roles_idroles', '1')->pluck('email')->toArray(); //Encontrar correos de admninistracion
+
+            $correoAdmins = new InformacionAdopcionMail(
+                $adoption,
+                'Nueva solicitud de adopcion ',
+                'emails.alertNuevaSolicitud-adoption'
+            );
+            Mail::to($adminEmails)->send($correoAdmins);
+            //**FIN ENVIO DE CORREO**********
 
             //****ACTUALIZAR ESTADO EN TABLA ANIMALES EN ADOPCION****
             $status="Solicitado";

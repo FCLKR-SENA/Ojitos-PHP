@@ -267,20 +267,19 @@
                                                 @endforeach
                                             </ul>
                                         @else
-                                            <p style="margin-bottom: 10%">No se encontraron vacunas para este animal.</p>
-                                            <p>¡Puedes adquirir las vacunas!.</p>
+                                            <p style="margin-bottom: 10%"><strong>{{ $animal->nombreAnimaladopocion}}</strong> Ya cuenta con todas las vacunas</p>
+                                            <p>¡Haz click en "Mas informacion" y enterate de mas!.</p>
                                         @endif
                                     </div>
 
                                     <div class="modal-column ">
-                                    <h2>Información adicional del animal</h2>
-                                <p>Identificacion: {{ $animal->id }}</p>
-                                <p>Nombre: {{ $animal->nombreAnimaladopocion }}</p>
-                                <p>Especie: {{ $animal->especie_Animal }}</p>
-                                <p>Raza: {{ $animal->raza }}</p>
-                                <p>Edad: {{ $animal->age }}</p>
+                                    <h3 style="font-family: 'Roboto Slab', serif; font-size: 120%; margin-bottom: 10%"><strong>Información adicional del animal</strong> </h3>
+                                <p><strong>Identificacion:</strong> {{ $animal->id }}</p>
+                                <p><strong>Nombre:</strong> {{ $animal->nombreAnimaladopocion }}</p>
+                                <p><strong>Especie:</strong> {{ $animal->especie_Animal }}</p>
+                                <p><strong>Raza:</strong> {{ $animal->raza }}</p>
+                                <p><strong>Edad:</strong> {{ $animal->age }}</p>
 
-                                <p>Observaciones: {{ $animal->observacionesAnimal }}</p>
                                         <div class="modal-container-botons">
                                             <div class="modal-boton1">
                                                 <button class="SinfoButton"  onclick="enviarCorreo('{{ $animal->id }}')">Mas Informacion</button>
@@ -315,7 +314,7 @@
     <div id="myModalc" class="modalc">
        <!-- <span class="closec">&times;</span> -> "X" para cierre de la ventana-->
         <div class="modal-contentc py-12">
-            <p class="confirdesc">Estamos enviando informacion a tu correo...</p>
+            <p class="confirdesc">Estamos enviando mas informacion a tu correo...</p>
            <!-- <div class="modal-buttonsc">
                 <button id="cancelBtnc">Aceptar</button>
                 Puedes agregar aquí un botón para realizar alguna acción adicional
@@ -331,6 +330,8 @@
     </div>
 
     <script>
+
+
         //******BARRA DE BUSQUEDA**************
         const searchInput = document.getElementById('searchInput');
         const items = document.querySelectorAll('.item');

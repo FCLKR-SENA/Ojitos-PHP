@@ -45,8 +45,11 @@
                             <x-nav-link :href="route('dashboardUser')" :active="request()->routeIs('dashboardUser')">
                                 {{ __('(Home)') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('AdopcionUser.index')" :active="request()->routeIs('AdopcionUser.*')">
+                            <x-nav-link :href="route('AdopcionUser.index')" :active="request()->routeIs('AdopcionUser.index')">
                                 {{ __('¡Adopta!') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('AdopcionUser.misSolicitudes')" :active="request()->routeIs('AdopcionUser.misSolicitudes')">
+                                {{ __('Mis solicitudes') }}
                             </x-nav-link>
                            @endif
                         @endif

@@ -8,22 +8,23 @@ use Illuminate\Http\Request;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class InformacionAdopcionMail extends Mailable
+class linkAdopcionMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $adoption;
     public $subject;
     public $view;
+    public $url;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Adoption $adoption, $subject, $view)
-    {
-        $this->adoption = $adoption;
+    public function __construct(Adoption $adoption, $url, $subject, $view)
+    {   $this->adoption=$adoption;
+        $this->url=$url;
         $this->subject = $subject;
         $this->view = $view;
     }

@@ -36,8 +36,5 @@ class InformacionAnimalMail extends Mailable
             ->subject('Información del Animal'); // Asunto del correo
     }
 
-    public function build2()
-    {
-        return $this->view('AdopcionUser.Form-Adoption');
-    }
+
 }

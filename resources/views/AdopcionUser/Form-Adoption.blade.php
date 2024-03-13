@@ -217,6 +217,12 @@
                                     </select>
                                 </div>
 
+                                <!-- Subir documento-->
+                                <div class="mt-3 select-container oculto">
+                                    <x-input-label for="adjunto" :value="__('Por favor sube tu documento de identidad al 150 en formato PDF. Esto nos servira a confirmar y acercarnos a tu identidad.')" />
+                                    <input type="file" name="adjunto" accept=".pdf" required>
+                                </div>
+
                                 <!-- Pregunta 11-->
                                 <div class="mt-3 select-container oculto">
                                     <x-input-label for="p11" :value="__('Finalmente cuentanos tu razon para adoptar')" />

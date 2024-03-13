@@ -1,4 +1,42 @@
 <style>
+/*MODAL TEMPORAL ESTILOS*/
+    .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.59);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        color: #fefefe;
+    }
+
+    .loading-message {
+        background-color: #1a282f;
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+    }
+
+    .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #694393;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 10px auto;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+/* FIN MODAL TEMPORAL*/
 
     .modal-buttonsc button {
         padding: 10px 20px;
@@ -122,8 +160,8 @@
     .Inf{
         font-size: 115%;
         font-weight: bold;
-        margin-top: 2%;
-        margin-bottom: 0.4%;
+        margin-top: 4%;
+        margin-bottom: 3.5%;
         font-family: 'Roboto Slab', serif;
     }
 
@@ -403,15 +441,18 @@
                                                                 @elseif($adopcion->probabilidad >59 && $adopcion->probabilidad<80)style="color: #28a745;text-align: center"
                                                                 @elseif($adopcion->probabilidad >59 && $adopcion->probabilidad<101)style="color: #007bff;text-align: center"
                                                                 @endif>{{$adopcion->probabilidad}}%</h2>
-                                                            <h2 class="Inf">Información adicional del animal</h2>
+                                                            <h2 class="Inf">Información adicional del solicitante</h2>
                                                             <p>Nombre: {{ $adopcion->users->name}} {{$adopcion->users->lastname}}</p>
                                                             <p>Identificacion: {{ $adopcion->users->document}}</p>
                                                             <p>Edad: {{$adopcion->users->age }} años</p>
                                                             <p>E-mail: {{$adopcion->users->email }}</p>
                                                             <p>Se unio a Ojitos: {{$adopcion->users->created_at }}</p>
                                                             <p style="margin-top: 2%;">Motivo de adopcion: {{ $adopcion->motivo }}</p>
+
                                                             <div class="modal-boton1">
-                                                                <button class="SinfoButtonUsuario"  onclick="enviarCorreo('{{ $adopcion->id_animaladopcion }}')">Mas Informacion</button>
+                                                                <a href="{{ route('admin.descargar-documento', ['userDocument' => $adopcion->id_animaladopcion]) }}">
+                                                                    <button class="SinfoButtonUsuario">Descargar documento</button>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -430,6 +471,15 @@
             </div>
         </div>
     </div>
+
+    <!---MODAL TEMPORAL POR PROCESO-->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-message">
+            <p>Procesando actualizacion...</p>
+            <div class="spinner"></div>
+        </div>
+    </div>
+    <!---FINAL MODAL TEMPORAL-->
 
     <!-- Modal Confirmacion correo -->
     <div id="myModalc" class="modalc">
@@ -502,6 +552,20 @@
 
 
     <script>
+        //**MODAL TEMPORAL ENTRE PROCESOS
+        function showLoading() {
+            document.getElementById("loadingOverlay").style.display = "flex";
+            document.getElementById("confirmationModalConcluir").style.display = "none";
+
+
+            // Simular un proceso que tarda 3 segundos
+            setTimeout(function() {
+                document.getElementById("loadingOverlay").style.display = "none";
+            }, 3000);
+        }
+
+        //**FIN DE MODAL TEMPORAL
+
         //*****Aprobacion de adopcion******
         function aprobarAdopcion(adopcionId) {
             document.getElementById('aprobarForm' + adopcionId).submit();
@@ -548,7 +612,8 @@
             // Asignamos un event listener al botón de confirmar dentro del modal
             // Cuando se hace clic en el botón de confirmar, se activa la función confirmActionCon(formId) para enviar el formulario asociado con formId
             document.getElementById('succesRButton').onclick = function() {
-                confirmActionRez(formId);
+
+                showLoading();
             };
         }
         function closeConfirmationRez() {

@@ -20,7 +20,8 @@ class Adoption extends Model
         'updated_at',
         'probabilidad',
         'adoption_status',
-        'motivo'
+        'motivo',
+        'file'
     ];
 
     public function users()

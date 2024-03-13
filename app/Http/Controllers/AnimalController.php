@@ -50,7 +50,10 @@ class AnimalController extends Controller
     public function indexUser()
     {
         $todasLasVacunas = Vacuna::all();
-        $animales = Animal::with('user')->latest()->get();
+        $animales = Animal::with('user')
+            ->where('estadoSolicitud', 'Solicitado')
+            ->orWhere('estadoSolicitud', 'Disponible')
+            ->oldest()->get();
 
         foreach ($animales as $animal) {
             $animal->vacunasModal = $this->mostrarVacunasModal($animal->id);

@@ -32,6 +32,13 @@ class AuthenticatedSessionController extends Controller
         if($request->user()->role->name == 'ADMIN'){
             return redirect('/dashboardAdmin');
         }
+
+        if ($request->hasValidSignature() && $request->has('redirect')) {
+            $urlDestino = $request->query('redirect');
+            Log::info('URL de destino:', ['url' => $urlDestino]);
+            return redirect()->to($urlDestino);
+        }
+
         return redirect('/dashboardUser');
        // return redirect()->intended(RouteServiceProvider::HOME);
     }

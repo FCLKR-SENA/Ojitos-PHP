@@ -26,7 +26,7 @@
         <!-- Edad -->
         <div class="mt-3">
             <x-input-label for="age" :value="__('edad')" />
-            <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" :value="old('age')" min="0" max="120" required autofocus autocomplete="age" />
+            <x-text-input id="age" class="block mt-1 w-full" type="number" name="age" :value="old('age')" min="18" max="120" required autofocus autocomplete="age" />
             <x-input-error :messages="$errors->get('age')" class="mt-2" />
         </div>
 

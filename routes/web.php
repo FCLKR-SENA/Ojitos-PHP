@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified', 'roles:ADMIN'])->group(function () {
     Route::post('/adopcion', [\App\Http\Controllers\AnimalController::class, 'store'])->name('AnimalAdmin.store');
 
     Route::post('/gestionAdopcion', [\App\Http\Controllers\AdoptionController::class, 'aprobarAdopcion'])->name('AdopcionAdmin.aprobacion');
+    Route::get('/admin/descargar-documento/{userDocument}', [\App\Http\Controllers\AdoptionController::class, 'descargarDocumento'])->name('admin.descargar-documento');
 
     Route::get('/solicitudes', [\App\Http\Controllers\AdoptionController::class, 'index'])->name('AdopcionAdmin.solicitudesAdoption');
     Route::post('/solicitudes', [\App\Http\Controllers\AdoptionController::class, 'concluirAdopcion'])->name('AdopcionAdmin.conclusionAdopcion');
@@ -91,6 +92,9 @@ Route::middleware(['auth', 'verified', 'roles:USER'])->group(function () {
     });
 
     Route::post('/adopta', [\App\Http\Controllers\ProbabilidadController::class, 'index'])->name('Probabilidad');
+    Route::get('/missolicitudes', [\App\Http\Controllers\AdoptionController::class, 'indexMisSolicitudes'])->name('AdopcionUser.misSolicitudes')->middleware('auth');
+
+
 });
 
 

@@ -117,14 +117,14 @@
                         <!--Nombre asignado-->
                         <div class="mt-3">
                             <x-input-label for="nombreAnimaladopocion" :value="__('Nombre asignado')" />
-                            <x-text-input id="nombreAnimaladopocion" class="block mt-1 w-full" type="text" name="nombreAnimaladopocion" :value="old('nombreAnimaladopocion',$animal->nombreAnimaladopocion)" required autofocus autocomplete="nombreAnimaladopocion" />
+                            <x-text-input id="nombreAnimaladopocion" class="block mt-1 w-full" type="text" name="nombreAnimaladopocion" :value="old('nombreAnimaladopocion',$animal->nombreAnimaladopocion)" required autofocus autocomplete="nombreAnimaladopocion" pattern="[a-zA-Z\s]+" title="Por favor, ingrese solo letras para el Nombre"/>
                             <x-input-error :messages="$errors->get('nombreAnimaladopocion')" class="mt-2" />
                         </div>
 
                         <!--Raza-->
                         <div class="mt-3">
                             <x-input-label for="raza" :value="__('cual es la raza')" />
-                            <x-text-input id="raza" class="block mt-1 w-full" type="text" name="raza" :value="old('raza',$animal->raza)" required autofocus autocomplete="raza" />
+                            <x-text-input id="raza" class="block mt-1 w-full" type="text" name="raza" :value="old('raza',$animal->raza)" required autofocus autocomplete="raza" pattern="[a-zA-Z\s]+" title="Por favor, ingrese solo letras para la raza/>
                             <x-input-error :messages="$errors->get('raza')" class="mt-2" />
                         </div>
 
