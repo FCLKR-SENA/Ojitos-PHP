@@ -113,7 +113,7 @@
         padding: 20px;
         border: 1px solid #888;
         width: 60%;
-        height: 100%;
+        height: auto;
     }
 
     /* Estilo del botón de cerrar */
@@ -451,7 +451,7 @@
 
                                                             <div class="modal-boton1">
                                                                 <a href="{{ route('admin.descargar-documento', ['userDocument' => $adopcion->id_animaladopcion]) }}">
-                                                                    <button class="SinfoButtonUsuario">Descargar documento</button>
+                                                                    <button class="SinfoButtonUsuario">Ver documento</button>
                                                                 </a>
                                                             </div>
                                                         </div>
@@ -561,7 +561,7 @@
             // Simular un proceso que tarda 3 segundos
             setTimeout(function() {
                 document.getElementById("loadingOverlay").style.display = "none";
-            }, 3000);
+            }, 10000);
         }
 
         //**FIN DE MODAL TEMPORAL
@@ -612,7 +612,7 @@
             // Asignamos un event listener al botón de confirmar dentro del modal
             // Cuando se hace clic en el botón de confirmar, se activa la función confirmActionCon(formId) para enviar el formulario asociado con formId
             document.getElementById('succesRButton').onclick = function() {
-
+                confirmActionRez(formId)
                 showLoading();
             };
         }

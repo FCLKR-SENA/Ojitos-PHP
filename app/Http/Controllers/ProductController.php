@@ -6,7 +6,6 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-
 class ProductController extends Controller
 {
     public function index()
@@ -68,7 +67,6 @@ class ProductController extends Controller
         $product->stock = $request->stock;
 
         if ($request->hasFile('img')) {
-            // Delete the previous image if it exists
             if ($product->img) {
                 Storage::disk('public')->delete($product->img);
             }
@@ -82,10 +80,16 @@ class ProductController extends Controller
 
         return redirect()->route('ProductAdmin.index')->with('success', 'Producto actualizado exitosamente.');
     }
+
     public function destroy(Product $product)
     {
         $product->delete();
 
         return redirect()->route('ProductAdmin.index')->with('success', 'Producto eliminado exitosamente.');
     }
+
+    public function indexClient()
+    {
+        $products = Product::all();
+        return view('ProductUser.indexClient', compact('products'));    }
 }

@@ -31,7 +31,10 @@ class Animal extends Model
         return $this->hasMany(Adoption::class, 'animal_adopcioncol');
     }
 
-
+    public function facturas()
+    {
+        return $this->hasMany(Factura::class, 'idAnimal');
+    }
 
     public function  user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

@@ -1,8 +1,13 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimalController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +62,8 @@ Route::middleware(['auth', 'verified', 'roles:ADMIN'])->group(function () {
         ->name('products.update');
     Route::delete('/products/{product}', [\App\Http\Controllers\ProductController::class, 'destroy'])
         ->name('products.destroy');
+    Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
+    Route::get('/invoices/{id}', [InvoiceController::class, 'show'])->name('invoices.show');
 //**********FIN PRODUCTO*************************
 
 //**********ADOPCION******************************
@@ -93,6 +100,24 @@ Route::middleware(['auth', 'verified', 'roles:USER'])->group(function () {
 
     Route::post('/adopta', [\App\Http\Controllers\ProbabilidadController::class, 'index'])->name('Probabilidad');
     Route::get('/missolicitudes', [\App\Http\Controllers\AdoptionController::class, 'indexMisSolicitudes'])->name('AdopcionUser.misSolicitudes')->middleware('auth');
+
+    Route::post('/comprarvacuna', [\App\Http\Controllers\AdoptionController::class, 'comprarVacuna'])->name('comprarVacuna');
+
+//**************PRODUCTOS USUARIOS************************************
+
+    Route::get('/products', [ProductController::class, 'indexClient'])->name('client.products');
+    Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
+    Route::patch('/cart/update', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+    Route::get('/cart', [CartController::class, 'showCart'])->name('client.cart');
+    Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
+    Route::get('/checkout', [CheckoutController::class, 'showCheckoutForm'])->name('checkout.form');
+    Route::get('/confirmation/{order}', [CheckoutController::class, 'showConfirmation'])->name('checkout.confirmation');
+    Route::get('/user/invoices', [InvoiceController::class, 'userInvoices'])->name('user.invoices');
+    Route::get('/user/invoices/{id}', [InvoiceController::class, 'userInvoiceDetails'])->name('user.invoice.details');
+
+
+//*************FIN PRODUCTOS USUARIOS*********************************
 
 
 });

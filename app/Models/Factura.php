@@ -14,6 +14,9 @@ class Factura extends Model
         'valor_factura',
         'iva',
         'total_factura',
+        'especificacion',
+        'idAnimal',
+        'metodoPago',
         'usuarios_id_usuario',
     ];
 
@@ -25,5 +28,10 @@ class Factura extends Model
     public function facturaDetails()
     {
         return $this->hasMany(FacturaDetail::class, 'factura_idfactura');
+    }
+
+    public function animals()
+    {
+        return $this->belongsTo(Animal::class, 'idAnimal');
     }
 }

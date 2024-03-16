@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Adoption;
 use App\Models\Animal;
+use App\Models\Factura;
 use App\Models\User;
+use App\Models\Vacuna;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -14,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+use Mockery\Exception;
 
 class AdoptionController extends Controller
 {
@@ -26,16 +29,45 @@ class AdoptionController extends Controller
         return view('AdopcionAdmin.solicitudesAdoption', compact('adopciones'));
     }
 
-    public function indexMisSolicitudes(Request $request)
+
+    public function mostrarVacunasModal($animalId)
+    {
+        $vacunas = DB::select('CALL encontrar_vacunas_modal(?)', [$animalId]);
+        return $vacunas;
+    }
+
+    public function mostrarVacunasModalxPrecio($animalId)
+    {
+        $vacunasPrice = DB::select('CALL Search_VN_Sin_Aplicar(?)', [$animalId]);
+        return $vacunasPrice;
+    }
+
+    public function indexMisSolicitudes()
     {
 
+        $todasLasVacunas = Vacuna::all();
         $idUsuario = Auth::user()->id;
         $misSolicitudes= Adoption::with('animals', 'users')
             ->where('usuarios_id_usuario',$idUsuario)
             ->get();
+        $animales = Animal::with('user')
+            ->where('estadoSolicitud', 'Solicitado')
+            ->orWhere('estadoSolicitud', 'Disponible')
+            ->oldest()->get();
+
+        foreach ($misSolicitudes as $misSolicitud) {
+            $misSolicitud->vacunasModal = $this->mostrarVacunasModal($misSolicitud->animals->id);
+            $misSolicitud->vacunasPriceModal = $this->mostrarVacunasModalxPrecio($misSolicitud->animals->id);
+        }
 
 
-        return view('AdopcionUser.misSolicitudes', compact('misSolicitudes'));
+        return view('AdopcionUser.misSolicitudes', [
+            'animals' => $animales,
+            'todasLasVacunas' => $todasLasVacunas,
+            'misSolicitudes' =>$misSolicitudes
+        ]);
+
+        //return view('AdopcionUser.misSolicitudes', compact('misSolicitudes'));
     }
 
     public function rechazar(Request $request, Animal $animal)
@@ -140,7 +172,8 @@ class AdoptionController extends Controller
         //**********FIN DE CORREO**************+
 
         //****ACTUALIZAR ESTADO EN TABLA ANIMALES EN ADOPCION****
-        DB::statement('CALL estadosolicitudAnimales(?)',[$idAnimal]);
+        $status ="Solicitado";
+        DB::statement('CALL estadosolicitudAnimales(?,?)',[$idAnimal,$status]);
         //*** FIN ACTUALIZACION DE TABLA**************
 
         return  to_route('AdopcionAdmin.solicitudesAdoption')->with('status','¡Se ha notificado al usuario la aprobacion!');
@@ -179,8 +212,13 @@ class AdoptionController extends Controller
 
         //ACTUALIZA TABLA ADOPCION SEGUN ESTADO VACUNACION
         $status="Adoptado";
-        DB::statement('CALL concluirAdopcion(?,?,?)',[$adoptionID,$status,$dateNow]);
+        DB::statement('CALL concluirAdopcion(?,?,?)',[$dateNow,$adoptionID,$status]);
         //FIN ACTUALIZA TABLA ADOPCION SEGUN ESTADO VACUNACION
+
+        //****ACTUALIZAR ESTADO EN TABLA ANIMALES EN ADOPCION****
+        $status ="Adoptado";
+        DB::statement('CALL estadosolicitudAnimales(?,?)',[$idAnimal,$status]);
+        //*** FIN ACTUALIZACION DE TABLA**************
 
         //***RECOLECCION DE DATOS DE USUARIO PARA CERTIFICADO
         $data=[
@@ -240,6 +278,105 @@ class AdoptionController extends Controller
         abort(404);
     }
 
+    public function comprarVacuna(Request $request){
+
+        $user = Auth::user();
+        $email = $user->email;
+
+        $idAnimal = $request->input('idAnimal');
+        $idUser = $request->input('idUser');
+        $iva = $request->input('iva');
+        $subTotal = $request->input('subTotal');
+        $total = $request->input('total');
+        $metodoPago = $request->input('metodoPago');
+        $idAdoption = $request->input('idAdoption');
 
 
+
+        //ACTUALIZA TABLA FACTURA SEGUN ESTADO VACUNACION
+        DB::statement('CALL comprarVacuna(?, ?, ?, ?, ?,?)', [
+            $iva,
+            $subTotal,
+            $total,
+            $idUser,
+            $metodoPago,
+            $idAnimal]);
+        //FIN ACTUALIZA TABLA ADOPCION SEGUN ESTADO VACUNACION
+
+
+        //***CONSULTAS POR ID ESPECIFICOS*********
+        $adoption= Adoption::with('animals', 'users')
+            ->where('usuarios_id_usuario',$idUser)
+            ->get();
+            $factura = Factura::with('users')
+                ->where([
+                    'usuarios_id_usuario' => $idUser,
+                    'idAnimal' => $idAnimal
+                ])
+                ->orderByDesc('idfactura')
+                ->first();
+        //*** FIN CONSULTAS POR ID ESPECIFICOS*********
+
+        foreach ($adoption as $adop) {
+            $adop->vacunasPriceModal = $this->mostrarVacunasModalxPrecio($adop->animals->id);
+        }
+// Convertir el array vacunasPriceModal en una colección de Eloquent
+        $vacunasPriceModal = collect($adop->vacunasPriceModal);
+
+// Obtener el nombre y precio de la vacuna de la colección
+        $nombreVacuna = $vacunasPriceModal->pluck('nombre')->all();
+        $precioVacuna = $vacunasPriceModal->pluck('price')->all();
+
+        //***RECOLECCION DE DATOS DE USUARIO PARA CERTIFICADO
+        $data=[
+            'userName' => $adop->users->name,
+            'apellido_adoptante' =>$adop->users->lastname,
+            'fecha_solicitud'=>$adop->created_at,
+            'raza'=>$adop->animals->raza,
+            'especie'=>$adop->animals->especie_Animal ,
+            'edad'=>$adop->animals->age,
+            'nombre_animal'=>$adop->animals->nombreAnimaladopocion,
+            'logo_path' => public_path('images\Logo.png'),
+            'nombreVacuna'=>$nombreVacuna,
+            'precioVacuna'=> $precioVacuna,
+            'numeroFactura' => $factura->idfactura,
+            'dateFactura' => $factura->fecha_factura,
+            'subtotal' =>$subTotal,
+            'IVA' =>$iva,
+            'total' =>$total,
+            'medioPago' =>$metodoPago
+        ];
+
+
+        // Creación del documento PDF utilizando la fachada PDF
+        $pdf = PDF::loadView('emails.facturaAdjunta-vacuna', $data)
+            ->setPaper('letter', 'portrait');
+        // Obtener el contenido del PDF como una cadena
+        $output = $pdf->output();
+
+        // Guardar el certificado en un archivo temporal
+        $filename = 'facturaAdjunta-vacuna_' . $factura->idfactura . '.pdf';
+        Storage::put('public/' . $filename, $output);
+        //Fin de guardar
+
+        $pdfPath = Storage::path('public/' . $filename);
+
+        //***ENVIO DE CORREO CON FACTURA****
+        Mail::to($email)->send(new FacturaVacuna($factura, $adop, $pdfPath));
+
+        // Eliminar el archivo temporal del certificado
+        unlink($pdfPath);
+        //****FIN ENVIO DE CORREO CON ADJUNTO**
+
+        //ACTUALIZA TABLA FACTURA SEGUN ESTADO VACUNACION
+        DB::statement('CALL updateTablesForCompra(?)', [
+            $idAnimal]);
+        //FIN ACTUALIZA TABLA ADOPCION SEGUN ESTADO VACUNACION
+
+
+
+        return to_route('AdopcionUser.misSolicitudes')->with('status', '¡Tu pago se ha realizado con exito!');
+
+
+    }
 }

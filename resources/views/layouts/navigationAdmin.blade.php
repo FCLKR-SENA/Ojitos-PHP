@@ -39,6 +39,9 @@
                             <x-nav-link :href="route('ProductAdmin.index')" :active="request()->routeIs('ProductAdmin.index')">
                                 {{ __('Productos') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('invoices.index')" :active="request()->routeIs('invoices.index')">
+                                {{ __('Facturas') }}
+                            </x-nav-link>
 
                         @elseif (Auth::user()->role->name == 'USER')
                             <!-- Sección para USER -->
@@ -50,6 +53,15 @@
                             </x-nav-link>
                             <x-nav-link :href="route('AdopcionUser.misSolicitudes')" :active="request()->routeIs('AdopcionUser.misSolicitudes')">
                                 {{ __('Mis solicitudes') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('client.products')" :active="request()->routeIs('client.products')">
+                                {{ __('Productos') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('client.cart')" :active="request()->routeIs('client.cart')">
+                                {{ __('Carrito') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('user.invoices')" :active="request()->routeIs('user.invoices')">
+                                {{ __('Mis Facturas') }}
                             </x-nav-link>
                            @endif
                         @endif
@@ -115,6 +127,12 @@
             <x-responsive-nav-link :href="route('AdopcionAdmin.solicitudesAdoption')" :active="request()->routeIs('AdopcionAdmin.*')">
                 {{ __('Solicitudes') }}
             </x-responsive-nav-link>
+            <x-nav-link :href="route('client.products')" :active="request()->routeIs('client.products')">
+                {{ __('Productos') }}
+            </x-nav-link>
+            <x-nav-link :href="route('client.cart')" :active="request()->routeIs('client.cart')">
+                {{ __('Carrito') }}
+            </x-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

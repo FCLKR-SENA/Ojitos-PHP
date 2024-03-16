@@ -1,4 +1,178 @@
 <style>
+    #succesButton {
+        background-color: #198f1b;
+        color: white;
+    }
+    /* Estilos para el contenedor */
+    .select-container {
+        background: linear-gradient(to bottom, #202838, #202838); /* Fondo entre azul y gris oscuro */
+        border: 2px solid #4e56ee; /* Borde morado */
+        border-radius: 5px; /* Borde redondeado */
+        padding: 6px; /* Espacio interno */
+        width: 100%; /* Ancho completo */
+        margin-top: 5%;
+    }
+
+    /* Estilos para el select */
+    .select-container select {
+        width: 100%; /* Ancho completo */
+        padding: 6px; /* Espacio interno */
+        border: none; /* Sin borde */
+        outline: none; /* Sin contorno */
+        background: none; /* Fondo transparente */
+        color: white; /* Color del texto */
+        appearance: none; /* Eliminar apariencia nativa del select */
+        cursor: pointer; /* Cursor de selección */
+    }
+
+    /* Estilos para las opciones del select */
+    .select-container select option {
+        background: #34495e; /* Fondo */
+        color: white; /* Color del texto */
+    }
+
+    /* MODAL CONFIRMACION ENVIO*/
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+
+    .modal-buttonsc button {
+        padding: 10px 20px;
+        margin-right: 0px;
+        cursor: pointer;
+        padding: 0%;
+        color: white;
+        background-color:#3269c2;
+        text-align: center; /* Centrar botón */
+        margin-top: 20px;
+    }
+
+    /* *****FIN MODAL***** */
+
+    .SinfoButton {
+        background-color:    #3269c2  ;
+        color: white;
+        padding: 6%;
+
+    }
+    .SadoptarButton {
+        background-color:   #694393 ;
+        color: white;
+        padding: 4%;
+
+    }
+    .modal-container-botons{
+        margin-top: 10%;
+    }
+    .modal-boton2{
+        margin-top: 5%;
+        text-align: right;
+    }
+    .modal-info-container {
+        display: flex;
+    }
+
+    .modal-column {
+        flex: 1;
+        padding: 0 20px; /* Ajusta el espaciado entre las columnas según sea necesario */
+    }
+
+    .modal-column img {
+        max-width: 100%;
+        height: auto;
+    }
+    /* Estilo del modal */
+    .modaldes {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.9);
+    }
+
+    /* Estilo del contenido del modal */
+    .modal-contentdes {
+        background-color: #1a282f;
+        margin: 15% auto;
+        padding: 10px;
+        border: 1px solid #888;
+        width: 50%;
+    }
+
+    /* Estilo del botón de cerrar */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    /* Estilo del botón de cerrar al pasar el mouse */
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        padding-top: 50px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.9);
+    }
+
+    .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 80%;
+        max-height: 80%;
+    }
+
+    .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .fecha{
+        margin-bottom: 2%;
+    }
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px; /* Separación entre las imágenes */
+    }
+
+
+    .item img {
+        max-width: 100%;
+        height: auto;
+    }
 
     .custom-button {
         background-color: #F1883A;
@@ -18,14 +192,6 @@
     }
 
 
-    /* Estilos para el contenedor */
-    .select-container {
-        background: linear-gradient(to bottom, #202838, #202838); /* Fondo entre azul y gris oscuro */
-        border: 2px solid #4e56ee; /* Borde morado */
-        border-radius: 5px; /* Borde redondeado */
-        padding: 6px; /* Espacio interno */
-        width: 40%; /* Ancho completo */
-    }
 
     /* Estilos para el select */
     .select-container select {
@@ -91,6 +257,17 @@
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.93);
+    }
+
+    #confirmationModalConcluir{
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
     }
 
     #confirmationModal {
@@ -183,11 +360,6 @@
 
     }
 
-    .updated_at {
-        font-size: 70%;
-        text-align: left;
-    }
-
     .fecha {
         font-size: 70%;
         text-align: center;
@@ -234,6 +406,7 @@
                                     </thead>
                                     <tbody>
                                     @foreach($misSolicitudes as $misSolicitud)
+
                                         <tr>
                                             <td> @if($misSolicitud->animals->img)
                                                     <img src="{{ asset($misSolicitud->animals->img) }}"
@@ -242,6 +415,7 @@
                                                 @else
                                                     No hay imagen
                                                 @endif
+
                                             </td>
                                             <td> {{ $misSolicitud->animals->nombreAnimaladopocion}}</td>
                                             <td class="fecha">{{ $misSolicitud->created_at }}</td>
@@ -251,7 +425,7 @@
                                             <td>{{ $misSolicitud->animals->observacionesAnimal }}</td>
                                             <td>@if($misSolicitud->adoption_status == 'P. Vacuna')
                                                     <p>Haz click y obten la vacuna</p>
-                                                    <button class="custom-button">Obtener</button>
+                                                    <button id="openModalBtnc" class="custom-button" onclick="openInfoModal('{{ $misSolicitud->animals->id }}')">Obtener</button>
                                                 @elseif($misSolicitud->adoption_status == 'P. Entrega')
                                                     <p>¡Ya puedes ir por tu amigo de 4 patas!</p>
                                                 @elseif($misSolicitud->adoption_status == 'En proceso')
@@ -260,6 +434,92 @@
                                                     <p>¡Es tuyo!</p>
                                                 @endif
                                             </td>
+
+                                            <!-- ******************MODAL PARA INFORMACIÓN*************** -->
+
+                                            <div id="infoModal{{ $misSolicitud->animals->id }}" class="modaldes">
+                                                <div class="modal-contentdes">
+                                                    <span class="close" onclick="closeInfoModal('{{ $misSolicitud->animals->id }}')">&times;</span>
+                                                    <div class="modal-info-container py-12 px-6">
+                                                        <!-- Contenido de la información adicional del animal -->
+
+
+                                                        <div class="modal-column">
+                                                            <img src="{{ asset($misSolicitud->animals->img) }}" style="max-width: 100%; max-height: 100%; margin-bottom: 5%" alt="imagen">
+                                                            <p style="font-size: 120%; font-style: normal; font-weight: bold; margin-bottom: 4%">Vacunas:</p>
+
+                                                           @foreach($misSolicitud->vacunasModal as $vacunaModal)
+                                                               @if($vacunaModal->adquisicion =="Sin_Aplicar")
+                                                                <li style="margin-bottom: 3%">{{ $vacunaModal->nombre }} <p style="font-family: 'Roboto Slab', serif ; font-size: 110%; color:  @if($vacunaModal->adquisicion == 'Aplicada')  #22b14c @else #d39e00 @endif ">({{ $vacunaModal->adquisicion }})</p></li><br>
+                                                                @endif
+                                                            @endforeach
+
+                                                            <br>
+                                                            <p>|<strong style="font-size: 90%; font-style: normal; font-palette: light">ELIGE EL METODO DE PAGO*</strong> |</p>
+                                                            <div class="select-container">
+                                                                <select id="metodoPago_{{ $misSolicitud->animals->id }}" class="block mt-1" name="metodoPago" required>
+                                                                    <option value="">Selecciona una opción</option>
+                                                                    <option value="PayPal">PayPal</option>
+                                                                    <option value="Efectivo">Efectivo</option>
+                                                                    <option value="Tarjeta de Credito">Tarjeta de Credito</option>
+                                                                </select>
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div class="modal-column">
+                                                            <h3 style="font-family: 'Roboto Slab', serif; font-size: 120%; margin-bottom: 10%"><strong>¡Ahora estas mas cerca de adoptar a "{{ $misSolicitud->animals->nombreAnimaladopocion }}"!</strong></h3>
+                                                            <p style="font-family: 'Roboto Slab', serif; font-style: italic">El costo de las vacunas incluyen IVA comercial del 19%</p><br>
+                                                            <p><strong>Vacunas a cancelar:</strong> </p><br>
+                                                            @php
+                                                                $subTotal = 0;
+                                                                $Total=0;
+                                                                $IVA =0;
+                                                            @endphp
+                                                            @foreach($misSolicitud->vacunasPriceModal as $vacunaPrice)
+
+                                                            <p><strong>Nombre:</strong>  {{$vacunaPrice->nombre}} </p>
+                                                            <p style="text-align: right"><strong>Costo:  </strong>  $ {{$vacunaPrice->price}}</p>
+
+                                                                    <p> ____________________________________</p><br>
+
+                                                                    @php
+                                                                        $subTotal += $vacunaPrice->price;
+                                                                        $IVA = $subTotal*0.19;
+                                                                        $Total = $IVA + $subTotal;
+                                                                    @endphp
+
+
+                                                            @endforeach
+                                                            <p style="text-align: right" ><strong>Subtotal: </strong> $ {{ $subTotal }}</p>
+                                                            <p style="text-align: right" ><strong>IVA: </strong> $ {{ $IVA }}</p>
+                                                            <p style="text-align: right" ><strong>Total a pagar: </strong> $ {{ $Total }}</p>
+
+                                                            <div class="modal-container-botons">
+                                                                <div class="modal-boton2">
+
+
+                                                                    <form method="POST" action="{{route('comprarVacuna')}}"  id="concluirForm{{ $misSolicitud->animals->id  }}"  enctype="multipart/form-data">
+                                                                        @csrf
+
+                                                                        @foreach($misSolicitudes as $misSolicitud)
+                                                                            <input type="hidden" name="idAdoption" value="{{ $misSolicitud->id_animaladopcion }}">
+
+
+                                                                        <input type="hidden" name="idAnimal" value="{{ $misSolicitud->animals->id }}">
+                                                                        <input type="hidden" name="idUser" value="{{ Auth::user()->id }}">
+                                                                        <input type="hidden" name="iva" value="{{ $IVA }}">
+                                                                        <input type="hidden" name="subTotal" value="{{ $subTotal }}">
+                                                                        <input type="hidden" name="total" value="{{ $Total }}">
+                                                                        @endforeach
+                                                                        </form>
+                                                                    <button class="SadoptarButton" onclick="concluirAdopcion('{{ $misSolicitud->animals->id }}')">Acepto Comprar</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -273,6 +533,21 @@
         </div>
     </div>
     </div>
+
+
+
+    <!--*******************************************-->
+    <!-- Cuadro de confirmación TERMINAR PROCESO-->
+    <div id="confirmationModalConcluir" style="display: none">
+        <div id="confirmationBox">
+            <h2 class="con">Confirmación</h2>
+            <p class="parcon">¿Quieres continuar con el Pago?</p>
+            <button id="succesButton" onclick="confirmActionCon()">Confirmar</button>
+            <button id="cancelButton" onclick="closeConfirmationCon()">Cancelar</button>
+        </div>
+    </div>
+    <!----FIN CUADRO DE CONFIRMACION--->
+    <!--***********************************************-->
 
     <!--MODAL PARA IMAGEN-->
     <div id="imageModal" class="modal">
@@ -306,6 +581,58 @@
 
 
     <script>
+        //*****concluision de adopcion******
+        function confirmActionCon() {
+            var formId = window.formToSubmit;
+
+            // Enviar el formulario asociado con el ID almacenado en la variable global
+            document.getElementById(formId).submit();
+        }
+        function concluirAdopcion(adopcionId) {
+            // Almacenamos el ID del formulario en una variable
+            var formId = 'concluirForm' + adopcionId;
+            var modalId = formId.replace('concluirForm', '');
+            var metodoPagoSelect = document.getElementById('metodoPago_' + modalId);
+
+            if (metodoPagoSelect.value === '') {
+                alert('Por favor, selecciona un método de pago.');
+                return;
+            } else {
+                // Crear un campo oculto con el valor seleccionado del método de pago
+                var hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = 'metodoPago';
+                hiddenInput.value = metodoPagoSelect.value;
+
+                // Agregar el campo oculto al formulario
+                var form = document.getElementById(formId);
+                form.appendChild(hiddenInput);
+                // Mostramos el modal de confirmación
+                document.getElementById('confirmationModalConcluir').style.display = 'block';
+                // Almacenamos el ID del formulario en una variable global
+                window.formToSubmit = formId;
+            }
+        }
+        function closeConfirmationCon() {
+            document.getElementById('confirmationModalConcluir').style.display = 'none';
+        }
+        //****FIN conclusion adopcion**********
+
+
+        //**MODAL DE INFORMACION OBTENER VACUNA
+
+        function openInfoModal(animalId) {
+            var modal = document.getElementById('infoModal' + animalId);
+            modal.style.display = "block";
+        }
+
+        function closeInfoModal(animalId) {
+            var modal = document.getElementById('infoModal' + animalId);
+            modal.style.display = "none";
+        }
+
+        //***FIN MODAL DE INFORMACION OBTENER VACUNA********
+
         //Generar checkbox dependiendo del SELECT
         document.getElementById('especie_Animal').addEventListener('change', function () {
             var especie_Animal = this.value;
@@ -387,40 +714,6 @@
         // Función para cerrar el cuadro de confirmación
         function closeConfirmationDel() {
             document.getElementById('confirmationModalDelete').style.display = 'none';
-        }
-
-        function validarFormulario() {
-            // Validar los campos del formulario
-            // Por ejemplo, puedes verificar si los campos están llenos
-            // Si los campos no están llenos, muestra un mensaje de error y devuelve false
-            if (!document.getElementById('fechaEncuentro').value || !document.getElementById('especie_Animal').value || !document.getElementById('nombreAnimaladopocion').value || !document.getElementById('raza').value || !document.getElementById('observacionesAnimal').value) {
-                alert("Por favor, complete todos los campos.");
-                return false;
-            }
-            openConfirmation(document.getElementById('miFormulario'));
-            // Devuelve false para evitar que el formulario se envíe automáticamente
-            return false;
-        }
-
-        var formToSubmit
-
-        // Función para mostrar el cuadro de confirmación y almacenar el formulario
-        function openConfirmation(form) {
-            formToSubmit = form; // Almacenar el formulario
-            document.getElementById('confirmationModal').style.display = 'block';
-        }
-
-        // Función para cerrar el cuadro de confirmación
-        function closeConfirmation() {
-            document.getElementById('confirmationModal').style.display = 'none';
-        }
-
-        // Función para confirmar la acción y enviar el formulario
-        function confirmAction() {
-            // Aquí puedes agregar la lógica para realizar el registro
-            formToSubmit.submit(); // Enviar el formulario almacenado
-            // Cerrar el cuadro de confirmación después de confirmar la acción
-            closeConfirmation();
         }
 
         document.getElementById("toggleFormButton").addEventListener("click", function () {
