@@ -26,7 +26,7 @@
                         <tbody>
                         @foreach ($order->facturaDetails as $item)
                             <tr>
-                                <td class="border px-4 py-2">{{ $item->description }}</td>
+                                <td class="border px-4 py-2">{{ $item->descriptionF }}</td>
                                 <td class="border px-4 py-2">{{ $item->quantity }}</td>
                                 <td class="border px-4 py-2">${{ $item->products_totals / $item->quantity }}</td>
                                 <td class="border px-4 py-2">${{ $item->products_totals }}</td>

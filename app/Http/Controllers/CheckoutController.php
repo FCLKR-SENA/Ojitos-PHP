@@ -55,7 +55,7 @@ class CheckoutController extends Controller
             $facturaDetail->quantity = $item['quantity'];
             $facturaDetail->products_totals = $item['product_price'] * $item['quantity'];
             $facturaDetail->iva = $item['product_price'] * $item['quantity'] * 0.19; // Assuming 19% tax rate
-            $facturaDetail->description = $item['product_name'];
+            $facturaDetail->descriptionF = $item['product_name'];
             $facturaDetail->save();
         }
 // Clear the cart session

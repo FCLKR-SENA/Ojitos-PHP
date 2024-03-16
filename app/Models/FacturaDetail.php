@@ -16,7 +16,7 @@ class FacturaDetail extends Model
         'quantity',
         'iva',
         'products_totals',
-        'description',
+        'descriptionF',
     ];
 
     public function factura()

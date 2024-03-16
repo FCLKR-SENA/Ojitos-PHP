@@ -37,14 +37,12 @@ CREATE TABLE IF NOT EXISTS `adopcion` (
   KEY `fk_adopcion_usuarios1_idx` (`usuarios_id_usuario`),
   CONSTRAINT `adopcion_ibfk_1` FOREIGN KEY (`animal_adopcioncol`) REFERENCES `animales_en_adopcion` (`id`),
   CONSTRAINT `fk_adopcion_usuarios1` FOREIGN KEY (`usuarios_id_usuario`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.adopcion: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.adopcion: ~1 rows (aproximadamente)
 INSERT INTO `adopcion` (`id_animaladopcion`, `fecha_adopcion`, `animal_adopcioncol`, `usuarios_id_usuario`, `img`, `created_at`, `updated_at`, `probabilidad`, `adoption_status`, `motivo`, `file`) VALUES
-	(184, '2024-03-13', 94, 56, 'storage/images/1709336150_Bear.jpg', '2024-03-13 11:08:39', '2024-03-13 11:08:39', 70, 'Adoptado', 'Estoy muy emocionado por ayudar a un animalito que lo necesita.', 'storage/documents/1710346119_Rechazo_Borrador.pdf'),
-	(185, '2024-03-13', 132, 56, 'storage/images/1710121829_Pachis.jpg', '2024-03-13 13:06:27', '2024-03-13 13:06:27', 10, 'P. Entrega', 'Estoy muy emocionado por ayudar a un animalito que lo necesita.', 'storage/documents/1710353187_Rechazo_Borrador.pdf'),
-	(186, NULL, 95, 56, 'storage/images/1709336130_Luker.jpg', '2024-03-13 19:13:04', '2024-03-13 19:13:04', 60, 'P. Entrega', 'Yo quiero adoptar, porque me siento muy solito. ;)', 'storage/documents/1710375184_Rechazo_Borrador.pdf'),
-	(187, NULL, 127, 56, 'storage/images/1710047547_Negro.jpg', '2024-03-13 19:16:11', '2024-03-13 19:16:11', 60, 'P. Vacuna', 'Quiero tener un ser en quien descargar mi ira', 'storage/documents/1710375371_Rechazo_Borrador.pdf');
+	(198, '2024-03-16', 137, 56, 'storage/images/1710564304_Lucho.jpg', '2024-03-16 04:47:43', '2024-03-16 04:47:43', 40, 'Adoptado', 'Estoy muy emocionado por ayudar a un animalito que lo necesita.', 'storage/documents/1710582463_Rechazo_Borrador.pdf'),
+	(199, '2024-03-16', 136, 56, 'storage/images/1710564235_Loco.jpg', '2024-03-16 13:19:38', '2024-03-16 13:19:38', 70, 'Adoptado', 'Estoy muy emocionado por ayudar a un animalito que lo necesita.', 'storage/documents/1710613178_Rechazo_Borrador.pdf');
 
 -- Volcando estructura para tabla ojitos_db1.animales_en_adopcion
 CREATE TABLE IF NOT EXISTS `animales_en_adopcion` (
@@ -60,22 +58,22 @@ CREATE TABLE IF NOT EXISTS `animales_en_adopcion` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.animales_en_adopcion: ~12 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.animales_en_adopcion: ~10 rows (aproximadamente)
 INSERT INTO `animales_en_adopcion` (`id`, `fechaEncuentro`, `nombreAnimaladopocion`, `especie_Animal`, `raza`, `age`, `observacionesAnimal`, `estadoSolicitud`, `img`, `created_at`, `updated_at`) VALUES
 	(89, '2024-02-25', 'Grande', 'Perro', 'Criollo', 24, 'Se dono de un refugio aliado. Falta Desparacitar. Vacunas al dia.', 'Disponible', 'storage/images/1709336216_Grande.jpg', '2024-02-25 08:38:30', '2024-03-01 18:36:56'),
-	(90, '2024-02-13', 'Loco', 'Gato', 'Siberiano', 6, 'Gato encontrado en un apto', 'Disponible', 'storage/images/1709336290_Loco.jpg', '2024-02-25 02:43:40', '2024-03-01 18:38:31'),
 	(91, '2024-02-13', 'Lion', 'Gato', 'angora', 6, 'Encontrado en santa marta, vacunas al dia. No se entrega solo', 'Disponible', 'storage/images/1709336273_Lion.jpg', '2024-02-25 03:45:45', '2024-03-01 18:37:53'),
-	(92, '2024-02-13', 'Labra', 'Perro', 'Criollo', 60, 'Se recogio de un refugio aliado. Vacuna antifelina. Falta desparacitante.', 'Adoptado', 'storage/images/1709336245_Labra.jpg', '2024-02-25 04:30:16', '2024-03-01 18:37:25'),
-	(93, '2024-02-26', 'Lulu', 'Perro', 'Beagle', 24, 'Encontrada en la calle', 'Disponible', 'storage/images/1709336185_Chiquis.jpg', '2024-02-26 19:52:31', '2024-03-01 18:36:25'),
-	(94, '2024-02-27', 'Bear', 'Perro', 'Criollo', 6, 'Gato encontrado en Sta Marta. Vacunas al dia se entrega con su hermano Ramon.', 'Adoptado', 'storage/images/1709336150_Bear.jpg', '2024-02-26 20:00:59', '2024-03-01 18:36:06'),
-	(95, '2024-02-27', 'Luker', 'Perro', 'Criollo', 25, 'El perrito encontrado en la calle parece ser un canino de tamaño pequeño, con un pelaje marrón claro y brillante. A pesar de su aspecto algo desaliñado, muestra signos de buen estado de salud y vitalidad. Su comportamiento es amigable y afectuoso, demostrando una clara necesidad de contacto humano y atención. Sin embargo, su aparente falta de pertenencia sugiere que puede haber estado perdido o abandonado recientemente.', 'Adoptado', 'storage/images/1709336130_Luker.jpg', '2024-02-26 20:57:01', '2024-03-09 18:57:44'),
-	(96, '2024-03-06', 'Petro', 'Perro', 'Siberiano', 60, 'Perro encontrado a las afueras de la ciudad. Vacuna antirrábica, desparasitado.', 'Disponible', 'storage/images/1709697464_Petro.jpg', '2024-03-05 22:57:45', '2024-03-05 22:57:45'),
-	(127, '2024-03-10', 'Negro', 'Gato', 'Criollo', 31, 'Gato encontrado en un apto', 'Adoptado', 'storage/images/1710047547_Negro.jpg', '2024-03-10 00:12:27', '2024-03-10 00:33:33'),
-	(130, '2024-03-10', 'Romeo', 'Gato', 'angora', 10, 'Señora deja gato abandonado en la orilla del anden.', 'Disponible', 'storage/images/1710055997_Angoro.jpg', '2024-03-10 02:33:17', '2024-03-10 02:33:17'),
-	(132, '2024-03-11', 'Pachis', 'Perro', 'Persa', 20, 'Animal abandonado por ser tan bonito, pero no hace nada mas que holgazanear en la casa. Según informan los vecinos.', 'Adoptado', 'storage/images/1710121829_Pachis.jpg', '2024-03-10 20:47:48', '2024-03-10 20:50:29'),
-	(133, '2024-03-11', 'Lucifer', 'Gato', 'Criollo', 50, 'Se sabe que un vecino llamado Jose lo abandono por cansón', 'Adoptado', 'storage/images/1710179471_Minina.jpg', '2024-03-11 12:51:12', '2024-03-11 12:51:12');
+	(93, '2024-03-15', 'Labra', 'Perro', 'Golden', 24, 'Encontrada en la calle', 'Disponible', 'storage/images/1710564553_Labra.jpg', '2024-02-26 19:52:31', '2024-03-15 23:49:13'),
+	(95, '2024-02-27', 'Luker', 'Perro', 'Criollo', 25, 'El perrito encontrado en la calle parece ser un canino de tamaño pequeño, con un pelaje marrón claro y brillante. A pesar de su aspecto algo desaliñado, muestra signos de buen estado de salud y vitalidad. Su comportamiento es amigable y afectuoso, demostrando una clara necesidad de contacto humano y atención. Sin embargo, su aparente falta de pertenencia sugiere que puede haber estado perdido o abandonado recientemente.', 'Disponible', 'storage/images/1709336130_Luker.jpg', '2024-02-26 20:57:01', '2024-03-09 18:57:44'),
+	(127, '2024-03-10', 'Negro', 'Gato', 'Criollo', 31, 'Gato encontrado en un apto', 'Disponible', 'storage/images/1710047547_Negro.jpg', '2024-03-10 00:12:27', '2024-03-10 00:33:33'),
+	(132, '2024-03-11', 'Pachis', 'Perro', 'Persa', 20, 'Animal abandonado por ser tan bonito, pero no hace nada mas que holgazanear en la casa. Según informan los vecinos.', 'Disponible', 'storage/images/1710121829_Pachis.jpg', '2024-03-10 20:47:48', '2024-03-10 20:50:29'),
+	(134, '2024-03-16', 'Bear', 'Perro', 'Siberiano', 27, 'Se recogio de un refugio aliado.', 'Disponible', 'storage/images/1710564096_Bear.jpg', '2024-03-15 23:41:36', '2024-03-15 23:41:36'),
+	(135, '2024-03-16', 'Chiquis', 'Perro', 'Chiguagua', 27, 'Perro encontrado a las afueras de la ciudad.', 'Disponible', 'storage/images/1710564168_Chiquis.jpg', '2024-03-15 23:42:48', '2024-03-15 23:42:48'),
+	(136, '2024-03-16', 'Loco', 'Gato', 'angora', 32, 'Gato encontrado en un apto', 'Adoptado', 'storage/images/1710564235_Loco.jpg', '2024-03-15 23:43:55', '2024-03-15 23:43:55'),
+	(137, '2024-03-16', 'Lucho', 'Perro', 'Golden', 120, 'Se sabe que un vecino llamado Jose lo abandono por cansón', 'Adoptado', 'storage/images/1710564304_Lucho.jpg', '2024-03-15 23:45:04', '2024-03-15 23:45:04'),
+	(138, '2024-03-16', 'Picholis', 'Perro', 'Peludin', 89, 'Perro encontrado asustado en un parque.', 'Disponible', 'storage/images/1710564653_Picholis.jpg', '2024-03-15 23:50:53', '2024-03-15 23:50:53'),
+	(139, '2024-03-16', 'Trasmi', 'Perro', 'Carlino', 156, 'Perro encontrado abandonado en un baño publico', 'Disponible', 'storage/images/1710564777_Trasmi.jpg', '2024-03-15 23:52:57', '2024-03-15 23:52:57');
 
 -- Volcando estructura para tabla ojitos_db1.animal_vacuna
 CREATE TABLE IF NOT EXISTS `animal_vacuna` (
@@ -90,26 +88,34 @@ CREATE TABLE IF NOT EXISTS `animal_vacuna` (
   KEY `FK_vacuna_id` (`vacuna_id`),
   CONSTRAINT `FK_animal_id` FOREIGN KEY (`animal_id`) REFERENCES `animales_en_adopcion` (`id`),
   CONSTRAINT `FK_vacuna_id` FOREIGN KEY (`vacuna_id`) REFERENCES `vacunas` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla ojitos_db1.animal_vacuna: ~16 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.animal_vacuna: ~24 rows (aproximadamente)
 INSERT INTO `animal_vacuna` (`id`, `animal_id`, `vacuna_id`, `adquisicion`, `created_at`, `updated_at`) VALUES
-	(88, 127, 6, 'Aplicada', NULL, NULL),
-	(89, 127, 7, 'Sin_Aplicar', NULL, NULL),
-	(90, 127, 8, 'Aplicada', NULL, NULL),
-	(91, 127, 10, 'Sin_Aplicar', NULL, NULL),
-	(100, 130, 6, 'Aplicada', NULL, NULL),
-	(101, 130, 7, 'Aplicada', NULL, NULL),
-	(102, 130, 8, 'Sin_Aplicar', NULL, NULL),
-	(103, 130, 10, 'Sin_Aplicar', NULL, NULL),
-	(108, 132, 3, 'Aplicada', NULL, NULL),
-	(109, 132, 4, 'Aplicada', NULL, NULL),
-	(110, 132, 5, 'Aplicada', NULL, NULL),
-	(111, 132, 9, 'Sin_Aplicar', NULL, NULL),
-	(112, 133, 6, 'Aplicada', NULL, NULL),
-	(113, 133, 7, 'Aplicada', NULL, NULL),
-	(114, 133, 8, 'Sin_Aplicar', NULL, NULL),
-	(115, 133, 10, 'Aplicada', NULL, NULL);
+	(116, 134, 3, 'Sin_Aplicar', NULL, NULL),
+	(117, 134, 4, 'Aplicada', NULL, NULL),
+	(118, 134, 5, 'Sin_Aplicar', NULL, NULL),
+	(119, 134, 9, 'Aplicada', NULL, NULL),
+	(120, 135, 3, 'Sin_Aplicar', NULL, NULL),
+	(121, 135, 4, 'Aplicada', NULL, NULL),
+	(122, 135, 5, 'Sin_Aplicar', NULL, NULL),
+	(123, 135, 9, 'Sin_Aplicar', NULL, NULL),
+	(124, 136, 6, 'Aplicada', NULL, NULL),
+	(125, 136, 7, 'Aplicada', NULL, NULL),
+	(126, 136, 8, 'Aplicada', NULL, NULL),
+	(127, 136, 10, 'Aplicada', NULL, NULL),
+	(128, 137, 3, 'Aplicada', NULL, NULL),
+	(129, 137, 4, 'Aplicada', NULL, NULL),
+	(130, 137, 5, 'Aplicada', NULL, NULL),
+	(131, 137, 9, 'Aplicada', NULL, NULL),
+	(132, 138, 3, 'Sin_Aplicar', NULL, NULL),
+	(133, 138, 4, 'Aplicada', NULL, NULL),
+	(134, 138, 5, 'Aplicada', NULL, NULL),
+	(135, 138, 9, 'Sin_Aplicar', NULL, NULL),
+	(136, 139, 3, 'Aplicada', NULL, NULL),
+	(137, 139, 4, 'Aplicada', NULL, NULL),
+	(138, 139, 5, 'Aplicada', NULL, NULL),
+	(139, 139, 9, 'Sin_Aplicar', NULL, NULL);
 
 -- Volcando estructura para procedimiento ojitos_db1.AprobacionAdoptar
 DELIMITER //
@@ -125,16 +131,36 @@ BEGIN
 END//
 DELIMITER ;
 
+-- Volcando estructura para procedimiento ojitos_db1.comprarVacuna
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `comprarVacuna`(
+	IN `in_IVA` DECIMAL(20,6),
+	IN `in_totalProductos` DECIMAL(20,6),
+	IN `in_totalFactura` DECIMAL(20,6),
+	IN `in_user` DECIMAL(20,6),
+	IN `in_metodoPago` VARCHAR(50),
+	IN `in_idAnimal` INT
+)
+BEGIN
+DECLARE in_date DATE DEFAULT CURDATE();
+
+INSERT INTO factura (fecha_factura, usuarios_id_usuario,valor_factura,iva,total_factura,especificacion,metodoPago,idAnimal  )
+VALUES (in_date, in_user,in_totalProductos,in_IVA,in_totalFactura, "Vacunas adopcion",in_metodoPago,in_idAnimal);
+
+
+END//
+DELIMITER ;
+
 -- Volcando estructura para procedimiento ojitos_db1.concluirAdopcion
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `concluirAdopcion`(
+	IN `in_date` DATE,
 	IN `p_id_animaladopcion` INT,
-	IN `p_status` VARCHAR(50),
-	IN `in_date` DATE
+	IN `p_status` VARCHAR(50)
 )
 BEGIN
   UPDATE adopcion 
-    SET adoption_status = p_status, fecha_adopcion = in_date
+    SET fecha_adopcion = in_date ,adoption_status = p_status
     WHERE id_animaladopcion = p_id_animaladopcion;
 END//
 DELIMITER ;
@@ -152,11 +178,12 @@ DELIMITER ;
 -- Volcando estructura para procedimiento ojitos_db1.estadosolicitudAnimales
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `estadosolicitudAnimales`(
-	IN `p_id` INT
+	IN `p_id` INT,
+	IN `in_status` VARCHAR(50)
 )
 BEGIN
     UPDATE animales_en_adopcion
-    SET estadoSolicitud = 'Adoptado'
+    SET estadoSolicitud = in_status
     WHERE id = p_id;
 END//
 DELIMITER ;
@@ -165,18 +192,57 @@ DELIMITER ;
 CREATE TABLE IF NOT EXISTS `factura` (
   `idfactura` int NOT NULL AUTO_INCREMENT,
   `fecha_factura` date NOT NULL,
-  `valor_factura` decimal(10,0) NOT NULL,
-  `iva` decimal(10,0) NOT NULL,
-  `total_factura` decimal(10,0) NOT NULL,
+  `valor_factura` decimal(10,0) DEFAULT NULL,
+  `iva` decimal(10,0) DEFAULT NULL,
+  `total_factura` decimal(10,0) DEFAULT NULL,
+  `especificacion` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `usuarios_id_usuario` int NOT NULL,
+  `idAnimal` int DEFAULT NULL,
+  `metodoPago` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`idfactura`),
   KEY `fk_factura_usuarios1_idx` (`usuarios_id_usuario`),
+  KEY `FK_factura_animales_en_adopcion` (`idAnimal`),
+  CONSTRAINT `FK_factura_animales_en_adopcion` FOREIGN KEY (`idAnimal`) REFERENCES `animales_en_adopcion` (`id`),
   CONSTRAINT `fk_factura_usuarios1` FOREIGN KEY (`usuarios_id_usuario`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.factura: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.factura: ~16 rows (aproximadamente)
+INSERT INTO `factura` (`idfactura`, `fecha_factura`, `valor_factura`, `iva`, `total_factura`, `especificacion`, `usuarios_id_usuario`, `idAnimal`, `metodoPago`, `created_at`, `updated_at`) VALUES
+	(99, '2024-03-15', 20000, 3800, 23800, NULL, 56, NULL, NULL, '2024-03-15 14:35:56', '2024-03-15 14:35:56'),
+	(100, '2024-03-15', 100000, 19000, 119000, NULL, 56, NULL, NULL, '2024-03-15 15:01:30', '2024-03-15 15:01:30'),
+	(101, '2024-03-15', 90000, 17100, 0, NULL, 56, NULL, NULL, '2024-03-15 15:04:05', '2024-03-15 15:04:05'),
+	(102, '2024-03-15', 90000, 17100, 0, NULL, 56, 137, NULL, '2024-03-15 15:04:05', '2024-03-15 15:04:05'),
+	(144, '2024-03-16', 0, 0, 0, 'Vacunas adopcion', 56, NULL, 'Efectivo', NULL, NULL),
+	(145, '2024-03-16', 0, 0, 0, 'Vacunas adopcion', 56, NULL, 'Efectivo', NULL, NULL),
+	(146, '2024-03-16', 0, 0, 0, 'Vacunas adopcion', 56, NULL, 'PayPal', NULL, NULL),
+	(147, '2024-03-16', 0, 0, 0, 'Vacunas adopcion', 56, NULL, 'PayPal', NULL, NULL),
+	(148, '2024-03-16', 0, 0, 0, 'Vacunas adopcion', 56, NULL, 'PayPal', NULL, NULL),
+	(149, '2024-03-16', 0, 0, 0, 'Vacunas adopcion', 56, NULL, 'PayPal', NULL, NULL),
+	(150, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, NULL, 'Efectivo', NULL, NULL),
+	(151, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, NULL, 'Efectivo', NULL, NULL),
+	(152, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(153, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(154, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(155, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(156, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(157, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(158, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(159, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(160, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(161, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(162, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(163, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(164, '2024-03-16', 75000, 14250, 89250, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(165, '2024-03-16', 140000, 26600, 166600, 'Vacunas adopcion', 56, 137, 'Tarjeta de Credito', NULL, NULL),
+	(166, '2024-03-16', 140000, 26600, 166600, 'Vacunas adopcion', 56, 137, 'PayPal', NULL, NULL),
+	(167, '2024-03-16', 125000, 23750, 148750, 'Vacunas adopcion', 56, 137, 'PayPal', NULL, NULL),
+	(168, '2024-03-16', 125000, 23750, 148750, 'Vacunas adopcion', 56, 137, 'PayPal', NULL, NULL),
+	(169, '2024-03-16', 125000, 23750, 148750, 'Vacunas adopcion', 56, 137, 'Efectivo', NULL, NULL),
+	(170, '2024-03-16', 10000, 1900, 11900, 'Vacunas adopcion', 56, 136, 'Tarjeta de Credito', NULL, NULL),
+	(171, '2024-03-16', 30000, 5700, 35700, NULL, 56, NULL, NULL, '2024-03-16 13:45:25', '2024-03-16 13:45:25'),
+	(172, '2024-03-16', 30000, 5700, 35700, NULL, 56, NULL, NULL, '2024-03-16 13:47:43', '2024-03-16 13:47:43');
 
 -- Volcando estructura para tabla ojitos_db1.factura_details
 CREATE TABLE IF NOT EXISTS `factura_details` (
@@ -185,7 +251,7 @@ CREATE TABLE IF NOT EXISTS `factura_details` (
   `quantity` int NOT NULL,
   `iva` decimal(10,0) NOT NULL,
   `products_totals` decimal(10,0) NOT NULL,
-  `description` varchar(45) DEFAULT NULL,
+  `descriptionF` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`factura_idfactura`,`product_id_product`),
@@ -195,7 +261,14 @@ CREATE TABLE IF NOT EXISTS `factura_details` (
   CONSTRAINT `fk_factura_has_product_product1` FOREIGN KEY (`product_id_product`) REFERENCES `product` (`id_product`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.factura_details: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.factura_details: ~4 rows (aproximadamente)
+INSERT INTO `factura_details` (`factura_idfactura`, `product_id_product`, `quantity`, `iva`, `products_totals`, `descriptionF`, `created_at`, `updated_at`) VALUES
+	(99, 15025, 1, 3800, 20000, 'Cama', '2024-03-15 14:35:56', '2024-03-15 14:35:56'),
+	(100, 15025, 5, 19000, 100000, 'Cama', '2024-03-15 15:01:30', '2024-03-15 15:01:30'),
+	(101, 15025, 3, 11400, 60000, 'Cama', '2024-03-15 15:04:05', '2024-03-15 15:04:05'),
+	(101, 15026, 1, 5700, 30000, 'Vacuna contra la Rabia', '2024-03-15 15:04:05', '2024-03-15 15:04:05'),
+	(172, 15025, 1, 3800, 20000, 'Cama', '2024-03-16 13:47:43', '2024-03-16 13:47:43'),
+	(172, 15031, 2, 1900, 10000, 'Hueso', '2024-03-16 13:47:43', '2024-03-16 13:47:43');
 
 -- Volcando estructura para procedimiento ojitos_db1.InsertarVacuna
 DELIMITER //
@@ -227,7 +300,7 @@ CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla ojitos_db1.password_reset_tokens: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.password_reset_tokens: ~1 rows (aproximadamente)
 
 -- Volcando estructura para tabla ojitos_db1.pet
 CREATE TABLE IF NOT EXISTS `pet` (
@@ -257,25 +330,55 @@ CREATE TABLE IF NOT EXISTS `product` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id_product`)
-) ENGINE=InnoDB AUTO_INCREMENT=15025 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=15032 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.product: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.product: ~4 rows (aproximadamente)
+INSERT INTO `product` (`id_product`, `product_name`, `product_price`, `descripcion`, `categoria`, `stock`, `img`, `created_at`, `updated_at`) VALUES
+	(15025, 'Cama', 20000, 'Cama para perro', NULL, 20, NULL, '2024-03-15 14:35:15', '2024-03-15 14:35:15'),
+	(15026, 'Vacuna contra la Rabia', 30000, 'Vacuna para perro', NULL, 30, NULL, '2024-03-15 15:02:48', '2024-03-15 15:02:48'),
+	(15029, 'Vacunas Perros', 0, 'Lista de vacunas para perros', NULL, 100, NULL, NULL, NULL),
+	(15030, 'Vacunas Gatos', 0, 'Lista de vacunas para gatos', NULL, 100, NULL, NULL, NULL),
+	(15031, 'Hueso', 5000, 'Hueso para perro (Carnasa)', NULL, 40, _binary 0x70726f647563745f696d616765732f4947305745436a594372597966535465453749354436515631644a504a6852666f6d76684c6a58482e6a7067, '2024-03-16 13:37:43', '2024-03-16 13:38:30');
 
 -- Volcando estructura para tabla ojitos_db1.producto_vacuna
 CREATE TABLE IF NOT EXISTS `producto_vacuna` (
   `id` int NOT NULL AUTO_INCREMENT,
   `producto_id` int NOT NULL,
   `vacuna_id` int NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
+  `price` decimal(65,0) NOT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_2_vacuna_id` (`vacuna_id`),
   KEY `FK_producto_id` (`producto_id`),
   CONSTRAINT `FK_2_vacuna_id` FOREIGN KEY (`vacuna_id`) REFERENCES `vacunas` (`id`),
   CONSTRAINT `FK_producto_id` FOREIGN KEY (`producto_id`) REFERENCES `product` (`id_product`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla ojitos_db1.producto_vacuna: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.producto_vacuna: ~8 rows (aproximadamente)
+INSERT INTO `producto_vacuna` (`id`, `producto_id`, `vacuna_id`, `price`, `created_at`, `updated_at`) VALUES
+	(1, 15029, 4, 30000, NULL, NULL),
+	(2, 15029, 5, 45000, NULL, NULL),
+	(3, 15029, 3, 50000, NULL, NULL),
+	(4, 15029, 9, 15000, NULL, NULL),
+	(5, 15030, 7, 30000, NULL, NULL),
+	(6, 15030, 8, 25000, NULL, NULL),
+	(7, 15030, 6, 18000, NULL, NULL),
+	(8, 15030, 10, 10000, NULL, NULL);
+
+-- Volcando estructura para procedimiento ojitos_db1.prueba
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `prueba`(
+	OUT `nombre` INT
+)
+BEGIN
+SELECT idfactura
+FROM factura
+WHERE usuarios_id_usuario = 56
+  AND fecha_factura IS NOT NULL
+  AND total_factura IS NULL;
+END//
+DELIMITER ;
 
 -- Volcando estructura para procedimiento ojitos_db1.rechazarAdopcion
 DELIMITER //
@@ -294,7 +397,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla ojitos_db1.roles: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.roles: ~2 rows (aproximadamente)
 INSERT INTO `roles` (`id`, `name`) VALUES
 	(1, 'ADMIN'),
 	(2, 'STAFF'),
@@ -310,6 +413,20 @@ SELECT * FROM animal_vacuna WHERE adquisicion = 'Sin_Aplicar' AND animal_id= in_
 END//
 DELIMITER ;
 
+-- Volcando estructura para procedimiento ojitos_db1.Search_VN_Sin_Aplicar
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `Search_VN_Sin_Aplicar`(
+	IN `in_idAnimal` INT
+)
+BEGIN
+SELECT vacunas.nombre, producto_vacuna.price
+FROM producto_vacuna
+INNER JOIN vacunas ON producto_vacuna.vacuna_id = vacunas.id
+INNER JOIN animal_vacuna ON animal_vacuna.vacuna_id = vacunas.id
+WHERE animal_vacuna.adquisicion ='Sin_Aplicar' AND animal_vacuna.animal_id = in_idAnimal;
+END//
+DELIMITER ;
+
 -- Volcando estructura para procedimiento ojitos_db1.updateStatusAnimalList
 DELIMITER //
 CREATE DEFINER=`root`@`localhost` PROCEDURE `updateStatusAnimalList`(
@@ -320,6 +437,28 @@ BEGIN
   UPDATE animales_en_adopcion
     SET estadoSolicitud = in_status
     WHERE id = in_id_animaladopcion;
+END//
+DELIMITER ;
+
+-- Volcando estructura para procedimiento ojitos_db1.updateTablesForCompra
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `updateTablesForCompra`(
+	IN `idAnimal` INT
+)
+BEGIN
+   UPDATE adopcion 
+   SET adoption_status = "P. Entrega"
+   WHERE animal_adopcioncol = idAnimal;
+
+
+  UPDATE animales_en_adopcion
+    SET estadoSolicitud = "Adoptado"
+    WHERE id = idAnimal;
+    
+       UPDATE animal_vacuna
+    SET adquisicion = "Aplicada"
+    WHERE animal_id =idAnimal;
+    
 END//
 DELIMITER ;
 
@@ -343,9 +482,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   CONSTRAINT `fk_users_roles1` FOREIGN KEY (`roles_idroles`) REFERENCES `roles` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.users: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.users: ~6 rows (aproximadamente)
 INSERT INTO `users` (`id`, `name`, `lastname`, `document`, `email`, `password`, `estado`, `age`, `updated_at`, `created_at`, `roles_idroles`, `remember_token`) VALUES
-	(49, 'Jefferson Alexander', 'Arenas Zea', '1013671072', 'faceluker@outlook.es', '$2y$10$FOjLcEql267KlVwitBUpEOK4RmpJWR22.AKC6kORL/CmZySgr3VTW', 'Activo', 27, '2024-02-28 20:22:01', '2024-02-21 22:22:22', 1, 'jYaCNV2saTJLoypt7gQIuEfr9vON6D8y1K2eSjnLuwk1xTZHkwqnCr0KoW6I'),
+	(49, 'Jefferson Alexander', 'Arenas Zea', '1013671072', 'faceluker@outlook.es', '$2y$10$FOjLcEql267KlVwitBUpEOK4RmpJWR22.AKC6kORL/CmZySgr3VTW', 'Activo', 27, '2024-02-28 20:22:01', '2024-02-21 22:22:22', 1, 'is57bX5INfDmspn1Sw0hRzV9MgZjbzI2QRtraT0vm6CeV7d5FHTcvAu6xi4t'),
 	(50, 'Jose Raul', 'Beltran Sanabria', '234243218', 'mabeluker_jeffer@hotmail.com', '$2y$10$RwRPgVYvC7qrwj3f7AYYBeowcELtav39HdjZci1sFKPAQErOj3J92', 'Activo', 27, '2024-02-27 10:58:58', '2024-02-22 23:41:43', 1, NULL),
 	(51, 'Mario', 'Casas', '10182677823', 'faceluker@outlook.__', '$2y$10$H8wW6aRaBqDtO0wQH1JaguDtw9cmEsgJ75YEQCqlJGmRd63bsxJe6', 'Activo', 32, '2024-03-07 19:25:42', '2024-02-28 19:02:53', 3, 'oweH3mBSW1PrTCkRCvA9xQ2poHkfcfCfcX9XhJ8PQqCZuWaYvGEkMbw5JA7r'),
 	(52, 'Novak', 'Djokovic', '10187858745', 'melosrun7@gmail.com', '$2y$10$KiX3V5TgSd6dAJLj7wlLM.9gCoXF3iMq1NzxK2wrB3Sv/h1/nBFWi', 'Activo', 36, '2024-02-28 19:08:47', '2024-02-28 19:08:47', 3, NULL),
