@@ -227,7 +227,7 @@
                                     <tr>
                                         <td>
                                             @if($product->img)
-                                                <img src="{{ asset('storage/product_images/' . $product->img) }}" style="max-width: 80px; max-height: 80px;" alt="imagen" onclick="openModal('{{ asset('storage/product_images/' . $product->img) }}')">
+                                                <img src="{{ asset('storage/' . $product->img) }}" style="max-width: 80px; max-height: 80px;" alt="imagen" onclick="openModal('{{ asset('storage/' . $product->img)}}')">
                                             @else
                                                 No hay imagen
                                             @endif

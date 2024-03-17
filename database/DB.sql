@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `adopcion` (
   CONSTRAINT `fk_adopcion_usuarios1` FOREIGN KEY (`usuarios_id_usuario`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.adopcion: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.adopcion: ~2 rows (aproximadamente)
 INSERT INTO `adopcion` (`id_animaladopcion`, `fecha_adopcion`, `animal_adopcioncol`, `usuarios_id_usuario`, `img`, `created_at`, `updated_at`, `probabilidad`, `adoption_status`, `motivo`, `file`) VALUES
 	(198, '2024-03-16', 137, 56, 'storage/images/1710564304_Lucho.jpg', '2024-03-16 04:47:43', '2024-03-16 04:47:43', 40, 'Adoptado', 'Estoy muy emocionado por ayudar a un animalito que lo necesita.', 'storage/documents/1710582463_Rechazo_Borrador.pdf'),
 	(199, '2024-03-16', 136, 56, 'storage/images/1710564235_Loco.jpg', '2024-03-16 13:19:38', '2024-03-16 13:19:38', 70, 'Adoptado', 'Estoy muy emocionado por ayudar a un animalito que lo necesita.', 'storage/documents/1710613178_Rechazo_Borrador.pdf');
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `animales_en_adopcion` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.animales_en_adopcion: ~10 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.animales_en_adopcion: ~11 rows (aproximadamente)
 INSERT INTO `animales_en_adopcion` (`id`, `fechaEncuentro`, `nombreAnimaladopocion`, `especie_Animal`, `raza`, `age`, `observacionesAnimal`, `estadoSolicitud`, `img`, `created_at`, `updated_at`) VALUES
 	(89, '2024-02-25', 'Grande', 'Perro', 'Criollo', 24, 'Se dono de un refugio aliado. Falta Desparacitar. Vacunas al dia.', 'Disponible', 'storage/images/1709336216_Grande.jpg', '2024-02-25 08:38:30', '2024-03-01 18:36:56'),
 	(91, '2024-02-13', 'Lion', 'Gato', 'angora', 6, 'Encontrado en santa marta, vacunas al dia. No se entrega solo', 'Disponible', 'storage/images/1709336273_Lion.jpg', '2024-02-25 03:45:45', '2024-03-01 18:37:53'),
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `animal_vacuna` (
   CONSTRAINT `FK_vacuna_id` FOREIGN KEY (`vacuna_id`) REFERENCES `vacunas` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Volcando datos para la tabla ojitos_db1.animal_vacuna: ~24 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.animal_vacuna: ~21 rows (aproximadamente)
 INSERT INTO `animal_vacuna` (`id`, `animal_id`, `vacuna_id`, `adquisicion`, `created_at`, `updated_at`) VALUES
 	(116, 134, 3, 'Sin_Aplicar', NULL, NULL),
 	(117, 134, 4, 'Aplicada', NULL, NULL),
@@ -208,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `factura` (
   CONSTRAINT `fk_factura_usuarios1` FOREIGN KEY (`usuarios_id_usuario`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.factura: ~16 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.factura: ~29 rows (aproximadamente)
 INSERT INTO `factura` (`idfactura`, `fecha_factura`, `valor_factura`, `iva`, `total_factura`, `especificacion`, `usuarios_id_usuario`, `idAnimal`, `metodoPago`, `created_at`, `updated_at`) VALUES
 	(99, '2024-03-15', 20000, 3800, 23800, NULL, 56, NULL, NULL, '2024-03-15 14:35:56', '2024-03-15 14:35:56'),
 	(100, '2024-03-15', 100000, 19000, 119000, NULL, 56, NULL, NULL, '2024-03-15 15:01:30', '2024-03-15 15:01:30'),
@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `factura_details` (
   CONSTRAINT `fk_factura_has_product_product1` FOREIGN KEY (`product_id_product`) REFERENCES `product` (`id_product`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
--- Volcando datos para la tabla ojitos_db1.factura_details: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla ojitos_db1.factura_details: ~6 rows (aproximadamente)
 INSERT INTO `factura_details` (`factura_idfactura`, `product_id_product`, `quantity`, `iva`, `products_totals`, `descriptionF`, `created_at`, `updated_at`) VALUES
 	(99, 15025, 1, 3800, 20000, 'Cama', '2024-03-15 14:35:56', '2024-03-15 14:35:56'),
 	(100, 15025, 5, 19000, 100000, 'Cama', '2024-03-15 15:01:30', '2024-03-15 15:01:30'),
@@ -330,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id_product`)
-) ENGINE=InnoDB AUTO_INCREMENT=15032 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=15033 DEFAULT CHARSET=utf8mb3;
 
 -- Volcando datos para la tabla ojitos_db1.product: ~4 rows (aproximadamente)
 INSERT INTO `product` (`id_product`, `product_name`, `product_price`, `descripcion`, `categoria`, `stock`, `img`, `created_at`, `updated_at`) VALUES
@@ -338,7 +338,8 @@ INSERT INTO `product` (`id_product`, `product_name`, `product_price`, `descripci
 	(15026, 'Vacuna contra la Rabia', 30000, 'Vacuna para perro', NULL, 30, NULL, '2024-03-15 15:02:48', '2024-03-15 15:02:48'),
 	(15029, 'Vacunas Perros', 0, 'Lista de vacunas para perros', NULL, 100, NULL, NULL, NULL),
 	(15030, 'Vacunas Gatos', 0, 'Lista de vacunas para gatos', NULL, 100, NULL, NULL, NULL),
-	(15031, 'Hueso', 5000, 'Hueso para perro (Carnasa)', NULL, 40, _binary 0x70726f647563745f696d616765732f4947305745436a594372597966535465453749354436515631644a504a6852666f6d76684c6a58482e6a7067, '2024-03-16 13:37:43', '2024-03-16 13:38:30');
+	(15031, 'Hueso', 5000, 'Hueso para perro (Carnasa)', NULL, 40, _binary 0x70726f647563745f696d616765732f4947305745436a594372597966535465453749354436515631644a504a6852666f6d76684c6a58482e6a7067, '2024-03-16 13:37:43', '2024-03-16 13:38:30'),
+	(15032, 'Transportin', 40000, 'Transportin para perros de 15kg', NULL, 40, _binary 0x70726f647563745f696d616765732f306d5165625431657869586e6e724d584c4958344e464337425448664666785948513337496c57472e6a7067, '2024-03-17 15:40:29', '2024-03-17 15:40:29');
 
 -- Volcando estructura para tabla ojitos_db1.producto_vacuna
 CREATE TABLE IF NOT EXISTS `producto_vacuna` (
@@ -484,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Volcando datos para la tabla ojitos_db1.users: ~6 rows (aproximadamente)
 INSERT INTO `users` (`id`, `name`, `lastname`, `document`, `email`, `password`, `estado`, `age`, `updated_at`, `created_at`, `roles_idroles`, `remember_token`) VALUES
-	(49, 'Jefferson Alexander', 'Arenas Zea', '1013671072', 'faceluker@outlook.es', '$2y$10$FOjLcEql267KlVwitBUpEOK4RmpJWR22.AKC6kORL/CmZySgr3VTW', 'Activo', 27, '2024-02-28 20:22:01', '2024-02-21 22:22:22', 1, 'is57bX5INfDmspn1Sw0hRzV9MgZjbzI2QRtraT0vm6CeV7d5FHTcvAu6xi4t'),
+	(49, 'Jefferson Alexander', 'Arenas Zea', '1013671072', 'faceluker@outlook.es', '$2y$10$FOjLcEql267KlVwitBUpEOK4RmpJWR22.AKC6kORL/CmZySgr3VTW', 'Activo', 27, '2024-02-28 20:22:01', '2024-02-21 22:22:22', 1, 'rg9kMHyeIEUEUlxZmQjiefGysb7slKyHp1ePJYx8YGiWGzcZciw7ATRsQntI'),
 	(50, 'Jose Raul', 'Beltran Sanabria', '234243218', 'mabeluker_jeffer@hotmail.com', '$2y$10$RwRPgVYvC7qrwj3f7AYYBeowcELtav39HdjZci1sFKPAQErOj3J92', 'Activo', 27, '2024-02-27 10:58:58', '2024-02-22 23:41:43', 1, NULL),
 	(51, 'Mario', 'Casas', '10182677823', 'faceluker@outlook.__', '$2y$10$H8wW6aRaBqDtO0wQH1JaguDtw9cmEsgJ75YEQCqlJGmRd63bsxJe6', 'Activo', 32, '2024-03-07 19:25:42', '2024-02-28 19:02:53', 3, 'oweH3mBSW1PrTCkRCvA9xQ2poHkfcfCfcX9XhJ8PQqCZuWaYvGEkMbw5JA7r'),
 	(52, 'Novak', 'Djokovic', '10187858745', 'melosrun7@gmail.com', '$2y$10$KiX3V5TgSd6dAJLj7wlLM.9gCoXF3iMq1NzxK2wrB3Sv/h1/nBFWi', 'Activo', 36, '2024-02-28 19:08:47', '2024-02-28 19:08:47', 3, NULL),
